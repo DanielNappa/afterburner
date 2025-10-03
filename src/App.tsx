@@ -13,7 +13,7 @@ import {
   MainMenuItem,
   Settings,
   StartupCheckInfo,
-  TweakccConfig,
+  afterburnerConfig,
 } from './utils/types.js';
 import {
   readConfigFile,
@@ -35,7 +35,7 @@ export default function App({
 }: {
   startupCheckInfo: StartupCheckInfo;
 }) {
-  const [config, setConfig] = useState<TweakccConfig>({
+  const [config, setConfig] = useState<afterburnerConfig>({
     settings: DEFAULT_SETTINGS,
     changesApplied: false,
     ccVersion: '',
@@ -86,7 +86,7 @@ export default function App({
   useEffect(() => {
     if (startupCheckInfo.wasUpdated && startupCheckInfo.oldVersion) {
       setNotification({
-        message: `Your Claude Code installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
+        message: `Your Github Copilot installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
 (However, your customization are still remembered in ${CONFIG_FILE}.)
 Please reapply your changes below.`,
         type: 'warning',
@@ -138,7 +138,7 @@ Please reapply your changes below.`,
         if (startupCheckInfo.ccInstInfo) {
           restoreClijsFromBackup(startupCheckInfo.ccInstInfo).then(() => {
             setNotification({
-              message: 'Original Claude Code restored successfully!',
+              message: 'Original Github Copilot restored successfully!',
               type: 'success',
             });
             updateSettings(() => {});

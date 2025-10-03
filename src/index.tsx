@@ -2,7 +2,7 @@
 import { render } from 'ink';
 import { Command } from 'commander';
 import App from './App.js';
-import { CLIJS_SEARCH_PATH_INFO, CONFIG_FILE } from './utils/types.js';
+import { INDEXJS_SEARCH_PATH_INFO, CONFIG_FILE } from './utils/types.js';
 import { startupCheck, readConfigFile } from './utils/config.js';
 import { enableDebug } from './utils/misc.js';
 import { applyCustomization } from './utils/patches/index.js';
@@ -10,11 +10,11 @@ import { applyCustomization } from './utils/patches/index.js';
 const main = async () => {
   const program = new Command();
   program
-    .name('tweakcc')
+    .name('afterburner')
     .description(
-      'Command-line tool to customize your Claude Code theme colors, thinking verbs and more.'
+      'Command-line tool to extend your GitHub CLI to accept more selectable models.'
     )
-    .version('1.5.5')
+    .version('0.0.1')
     .option('-d, --debug', 'enable debug mode')
     .option('-a, --apply', 'apply saved customizations without interactive UI');
   program.parse();
@@ -26,7 +26,7 @@ const main = async () => {
 
   // Handle --apply flag for non-interactive mode
   if (options.apply) {
-    console.log('Applying saved customizations to Claude Code...');
+    console.log('Applying saved customizations to Github Copilot...');
     console.log(`Configuration saved at: ${CONFIG_FILE}`);
 
     try {
@@ -38,13 +38,13 @@ const main = async () => {
         process.exit(1);
       }
 
-      // Find Claude Code installation
+      // Find Github Copilot installation
       const startupCheckInfo = await startupCheck();
 
       if (!startupCheckInfo || !startupCheckInfo.ccInstInfo) {
-        console.error(`Cannot find Claude Code's cli.js`);
+        console.error(`Cannot find Github Copilot's index.js`);
         console.error('Searched at the following locations:');
-        CLIJS_SEARCH_PATH_INFO.forEach(info => {
+        INDEXJS_SEARCH_PATH_INFO.forEach(info => {
           if (info.isGlob) {
             if (info.expandedPaths.length === 0) {
               console.error(`  - ${info.pattern} (no matches)`);
@@ -62,7 +62,7 @@ const main = async () => {
       }
 
       console.log(
-        `Found Claude Code at: ${startupCheckInfo.ccInstInfo.cliPath}`
+        `Found Github Copilot at: ${startupCheckInfo.ccInstInfo.cliPath}`
       );
       console.log(`Version: ${startupCheckInfo.ccInstInfo.version}`);
 
@@ -85,7 +85,7 @@ const main = async () => {
   } else {
     // Format the search paths to show glob patterns with their expansions
     const formatSearchPaths = () => {
-      return CLIJS_SEARCH_PATH_INFO.map(info => {
+      return INDEXJS_SEARCH_PATH_INFO.map(info => {
         if (info.isGlob) {
           if (info.expandedPaths.length === 0) {
             return `- ${info.pattern} (no matches)`;
@@ -102,28 +102,28 @@ const main = async () => {
       }).join('\n');
     };
 
-    console.error(`Cannot find Claude Code's cli.js -- do you have Claude Code installed?
+    console.error(`Cannot find Github Copilot's index.js -- do you have Github Copilot installed?
 
 Searched at the following locations:
 ${formatSearchPaths()}
 
 If you have it installed but it's in a location not listed above, please open an issue at
-https://github.com/piebald-ai/tweakcc/issues and tell us where you have it--we'll add that location
-to our search list and release an update today!  And in the meantime, you can get tweakcc working
+https://github.com/piebald-ai/afterburner/issues and tell us where you have it--we'll add that location
+to our search list and release an update today!  And in the meantime, you can get afterburner working
 by manually specifying that location in ${CONFIG_FILE} with the "ccInstallationDir" property:
 
 {
   "ccInstallationDir": "${
     process.platform == 'win32'
       ? 'C:\\\\absolute\\\\path\\\\to\\\\node_modules\\\\@anthropic-ai\\\\claude-code'
-      : '/absolute/path/to/node_modules/@anthropic-ai/claude-code'
+      : '/absolute/path/to/node_modules/@github/copilot'
   }"
 }
 
 Notes:
-- Don't include cli.js in the path.
-- Don't specify the path to your Claude Code executable's directory.  It needs to be the path
-  to the folder that contains **cli.js**.
+- Don't include index.js in the path.
+- Don't specify the path to your Github Copilot executable's directory.  It needs to be the path
+  to the folder that contains **index.js**.
 - Please also open an issue so that we can add your path to the search list for all users!
 `);
     process.exit(1);

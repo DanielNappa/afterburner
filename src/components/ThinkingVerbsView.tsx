@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Box, Text, useInput } from 'ink';
-import { getCurrentClaudeCodeTheme } from '../utils/misc.js';
+import { getCurrentCopilotTheme } from '../utils/misc.js';
 import { DEFAULT_SETTINGS } from '../utils/types.js';
 import { SettingsContext } from '../App.js';
 import Header from './Header.js';
@@ -28,7 +28,7 @@ export function ThinkingVerbsView({ onBack }: ThinkingVerbsViewProps) {
   const [editingFormat, setEditingFormat] = useState(false);
   const [formatInput, setFormatInput] = useState(format);
   // Get current Claude theme and color
-  const currentThemeId = getCurrentClaudeCodeTheme();
+  const currentThemeId = getCurrentCopilotTheme();
   const currentTheme =
     themes.find(t => t.id === currentThemeId) ||
     themes.find(t => t.id === 'dark');

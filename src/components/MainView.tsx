@@ -18,15 +18,15 @@ interface MainViewProps {
 const baseMenuItems: SelectItem[] = [
   {
     name: MainMenuItem.THEMES,
-    desc: "Modify Claude Code's built-in themes or create your own",
+    desc: "Modify Github Copilot's built-in themes or create your own",
   },
   {
     name: MainMenuItem.LAUNCH_TEXT,
-    desc: 'Change the "CLAUDE CODE" banner text that\'s shown when you sign in to Claude Code',
+    desc: 'Change the "Github Copilot" banner text that\'s shown when you sign in to Github Copilot',
   },
   {
     name: MainMenuItem.THINKING_VERBS,
-    desc: "Customize the list of verbs that Claude Code uses when it's working",
+    desc: "Customize the list of verbs that Github Copilot uses when it's working",
   },
   {
     name: MainMenuItem.THINKING_STYLE,
@@ -46,15 +46,15 @@ const baseMenuItems: SelectItem[] = [
 const systemMenuItems: SelectItem[] = [
   {
     name: MainMenuItem.RESTORE_ORIGINAL,
-    desc: 'Reverts your Claude Code install to its original state (your customizations are remembered and can be reapplied)',
+    desc: 'Reverts your Github Copilot install to its original state (your customizations are remembered and can be reapplied)',
   },
   {
     name: MainMenuItem.OPEN_CONFIG,
-    desc: `Opens your tweakcc config file (${CONFIG_FILE})`,
+    desc: `Opens your afterburner config file (${CONFIG_FILE})`,
   },
   {
     name: MainMenuItem.OPEN_CLI,
-    desc: "Opens Claude Code's cli.js file",
+    desc: "Opens Github Copilot's index.js file",
   },
   {
     name: MainMenuItem.EXIT,
@@ -69,7 +69,7 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
       : [
           {
             name: MainMenuItem.APPLY_CHANGES,
-            desc: "Required: Updates Claude Code's cli.js in-place with your changes",
+            desc: "Required: Updates Github Copilot's index.js in-place with your changes",
             selectedStyles: {
               color: 'green',
             },
@@ -84,11 +84,11 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Header>Tweak Claude Code</Header>
+        <Header>Tweak Github Copilot</Header>
       </Box>
       <Box marginBottom={1}>
         <Text color="gray">
-          <Text bold>Customize your Claude Code installation.</Text>{' '}
+          <Text bold>Customize your Github Copilot installation.</Text>{' '}
           <Text dimColor>Settings will be saved to a JSON file.</Text>
         </Text>
       </Box>
@@ -96,9 +96,9 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
       <Box marginBottom={1}>
         <Text color="yellow">
           ⭐ <Text bold>Star the repo at </Text>
-          <Link url="https://github.com/Piebald-AI/tweakcc" fallback={false}>
+          <Link url="https://github.com/Piebald-AI/afterburner" fallback={false}>
             <Text bold color="cyan">
-              https://github.com/Piebald-AI/tweakcc
+              https://github.com/Piebald-AI/afterburner
             </Text>
           </Link>
           <Text bold> if you find this useful!</Text> ⭐

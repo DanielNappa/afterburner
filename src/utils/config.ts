@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  ClaudeCodeInstallationInfo,
+  CopilotInstallationInfo,
   CLIJS_BACKUP_FILE,
   CLIJS_SEARCH_PATHS,
   CONFIG_DIR,
@@ -9,7 +9,7 @@ import {
   DEFAULT_SETTINGS,
   StartupCheckInfo,
   ThinkingVerbsConfig,
-  TweakccConfig,
+  afterburnerConfig,
 } from './types.js';
 import {
   hashFileInChunks,
@@ -21,7 +21,7 @@ export const ensureConfigDir = async (): Promise<void> => {
   await fs.mkdir(CONFIG_DIR, { recursive: true });
 };
 
-let lastConfig: TweakccConfig = {
+let lastConfig: afterburnerConfig = {
   settings: DEFAULT_SETTINGS,
   changesApplied: false,
   ccVersion: '',
@@ -32,8 +32,8 @@ let lastConfig: TweakccConfig = {
 /**
  * Loads the contents of the config file, or default values if it doesn't exist yet.
  */
-export const readConfigFile = async (): Promise<TweakccConfig> => {
-  const config: TweakccConfig = {
+export const readConfigFile = async (): Promise<afterburnerConfig> => {
+  const config: afterburnerConfig = {
     ccVersion: '',
     ccInstallationDir: null,
     lastModified: new Date().toISOString(),
@@ -46,7 +46,7 @@ export const readConfigFile = async (): Promise<TweakccConfig> => {
     }
 
     const content = await fs.readFile(CONFIG_FILE, 'utf8');
-    const readConfig: TweakccConfig = { ...config, ...JSON.parse(content) };
+    const readConfig: afterburnerConfig = { ...config, ...JSON.parse(content) };
 
     // In v1.1.0 thinkingVerbs.punctuation was renamed to thinkingVerbs.format.  This should catch
     // old configs.
@@ -99,8 +99,8 @@ export const readConfigFile = async (): Promise<TweakccConfig> => {
  * Updates the config file with the changes made by the `updateFn` callback.
  */
 export const updateConfigFile = async (
-  updateFn: (config: TweakccConfig) => void
-): Promise<TweakccConfig> => {
+  updateFn: (config: afterburnerConfig) => void
+): Promise<afterburnerConfig> => {
   if (isDebug()) {
     console.log(`Updating config at ${CONFIG_FILE}`);
   }
@@ -113,7 +113,7 @@ export const updateConfigFile = async (
 /**
  * Internal function to write contents to the config file.
  */
-const saveConfig = async (config: TweakccConfig): Promise<void> => {
+const saveConfig = async (config: afterburnerConfig): Promise<void> => {
   try {
     config.lastModified = new Date().toISOString();
     await ensureConfigDir();
@@ -125,14 +125,14 @@ const saveConfig = async (config: TweakccConfig): Promise<void> => {
 };
 
 /**
- * Restores the original cli.js file from the backup.
+ * Restores the original index.js file from the backup.
  * Unlinks the file first to break any hard links (e.g., from Bun's linking system).
  */
 export const restoreClijsFromBackup = async (
-  ccInstInfo: ClaudeCodeInstallationInfo
+  ccInstInfo: CopilotInstallationInfo
 ): Promise<boolean> => {
   if (isDebug()) {
-    console.log(`Restoring cli.js from backup to ${ccInstInfo.cliPath}`);
+    console.log(`Restoring index.js from backup to ${ccInstInfo.cliPath}`);
   }
 
   // Read the backup content
@@ -153,11 +153,11 @@ export const restoreClijsFromBackup = async (
 };
 
 /**
- * Searches for the Claude Code installation in the default locations.
+ * Searches for the Github Copilot installation in the default locations.
  */
-export const findClaudeCodeInstallation = async (
-  config: TweakccConfig
-): Promise<ClaudeCodeInstallationInfo | null> => {
+export const findCopilotInstallation = async (
+  config: afterburnerConfig
+): Promise<CopilotInstallationInfo | null> => {
   if (config.ccInstallationDir) {
     CLIJS_SEARCH_PATHS.unshift(config.ccInstallationDir);
   }
@@ -165,17 +165,17 @@ export const findClaudeCodeInstallation = async (
   for (const searchPath of CLIJS_SEARCH_PATHS) {
     try {
       if (isDebug()) {
-        console.log(`Searching for Claude Code cli.js file at ${searchPath}`);
+        console.log(`Searching for Github Copilot index.js file at ${searchPath}`);
       }
 
-      // Check for cli.js
-      const cliPath = path.join(searchPath, 'cli.js');
+      // Check for index.js
+      const cliPath = path.join(searchPath, 'index.js');
       if (!(await doesFileExist(cliPath))) {
         continue;
       }
       if (isDebug()) {
         console.log(
-          `Found Claude Code cli.js file at ${searchPath}; checking hash...`
+          `Found Github Copilot index.js file at ${searchPath}; checking hash...`
         );
         console.log(`SHA256 hash: ${await hashFileInChunks(cliPath)}`);
       }
@@ -219,10 +219,10 @@ export const findClaudeCodeInstallation = async (
   return null;
 };
 
-const backupClijs = async (ccInstInfo: ClaudeCodeInstallationInfo) => {
+const backupClijs = async (ccInstInfo: CopilotInstallationInfo) => {
   await ensureConfigDir();
   if (isDebug()) {
-    console.log(`Backing up cli.js to ${CLIJS_BACKUP_FILE}`);
+    console.log(`Backing up index.js to ${CLIJS_BACKUP_FILE}`);
   }
   await fs.copyFile(ccInstInfo.cliPath, CLIJS_BACKUP_FILE);
   await updateConfigFile(config => {
@@ -244,13 +244,13 @@ async function doesFileExist(filePath: string): Promise<boolean> {
 }
 
 /**
- * Performs startup checking: finding Claude Code, creating a backup if necessary, checking if
+ * Performs startup checking: finding Github Copilot, creating a backup if necessary, checking if
  * it's been updated.  If true, an update is required.
  */
 export async function startupCheck(): Promise<StartupCheckInfo | null> {
   const config = await readConfigFile();
 
-  const ccInstInfo = await findClaudeCodeInstallation(config);
+  const ccInstInfo = await findCopilotInstallation(config);
   if (!ccInstInfo) {
     return null;
   }
@@ -258,12 +258,12 @@ export async function startupCheck(): Promise<StartupCheckInfo | null> {
   const realVersion = ccInstInfo.version;
   const backedUpVersion = config.ccVersion;
 
-  // Backup cli.js if we don't have any backup yet.
+  // Backup index.js if we don't have any backup yet.
   let hasBackedUp = false;
   if (!(await doesFileExist(CLIJS_BACKUP_FILE))) {
     if (isDebug()) {
       console.log(
-        `startupCheck: ${CLIJS_BACKUP_FILE} not found; backing up cli.js`
+        `startupCheck: ${CLIJS_BACKUP_FILE} not found; backing up index.js`
       );
     }
     await backupClijs(ccInstInfo);
@@ -279,7 +279,7 @@ export async function startupCheck(): Promise<StartupCheckInfo | null> {
     if (!hasBackedUp) {
       if (isDebug()) {
         console.log(
-          `startupCheck: real version (${realVersion}) != backed up version (${backedUpVersion}); backing up cli.js`
+          `startupCheck: real version (${realVersion}) != backed up version (${backedUpVersion}); backing up index.js`
         );
       }
       await fs.unlink(CLIJS_BACKUP_FILE);

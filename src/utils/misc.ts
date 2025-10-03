@@ -14,7 +14,7 @@ export const enableDebug = (): void => {
   isDebugModeOn = true;
 };
 
-export function getCurrentClaudeCodeTheme(): string {
+export function getCurrentCopilotTheme(): string {
   try {
     const ccConfigPath = path.join(os.homedir(), '.claude.json');
     const ccConfig = JSON.parse(fs.readFileSync(ccConfigPath, 'utf8'));

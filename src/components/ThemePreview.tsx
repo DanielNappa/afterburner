@@ -64,7 +64,7 @@ export function ThemePreview({ theme }: ThemePreviewProps) {
           <Text>
             <Text color={theme.colors.claude}>│ </Text>
             <Text color={theme.colors.claude}>✻</Text>
-            <Text> Welcome to Tweak Claude Code!</Text>
+            <Text> Welcome to Tweak Github Copilot!</Text>
             <Text color={theme.colors.claude}>{'             '}│</Text>
           </Text>
           <Text>

@@ -1,14 +1,14 @@
 import figlet from 'figlet';
 import * as fs from 'node:fs/promises';
 import { restoreClijsFromBackup, updateConfigFile } from '../config.js';
-import { ClaudeCodeInstallationInfo, TweakccConfig } from '../types.js';
+import { CopilotInstallationInfo, afterburnerConfig } from '../types.js';
 import { isDebug, replaceFileBreakingHardLinks } from '../misc.js';
 
 // Notes to patch-writers:
 //
 // - Always use [\w$]+ instead of \w+ to match identifiers (variable/function names), because at
 //   least in Node.js's regex engine, \w+ does not include $, so ABC$, which is a perfectly valid
-//   identifier, would not be matched.  The way cli.js is minified, $ frequently appears in global
+//   identifier, would not be matched.  The way index.js is minified, $ frequently appears in global
 //   identifiers.
 //
 // - When starting a regular expression with an identifier name, for example if you're matching a
@@ -112,9 +112,9 @@ export const findChalkVar = (fileContents: string): string | undefined => {
 };
 
 export const applyCustomization = async (
-  config: TweakccConfig,
-  ccInstInfo: ClaudeCodeInstallationInfo
-): Promise<TweakccConfig> => {
+  config: afterburnerConfig,
+  ccInstInfo: CopilotInstallationInfo
+): Promise<afterburnerConfig> => {
   // Clean up any existing customizations, which will likely break the heuristics, by restoring the
   // original file from the backup.
   await restoreClijsFromBackup(ccInstInfo);

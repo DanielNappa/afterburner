@@ -1,11 +1,11 @@
 {
-  "name": "tweakcc",
-  "version": "1.5.5",
+  "name": "afterburner",
+  "version": "0.1.1",
   "type": "module",
-  "description": "Command-line tool to customize your Claude Code theme colors, thinking verbs and more.",
+  "description": "Command-line tool to customize your Github Copilot theme colors, thinking verbs and more.",
   "main": "dist/index.js",
   "bin": {
-    "tweakcc": "./dist/index.js"
+    "afterburner": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -b && vite build",
@@ -13,7 +13,8 @@
     "start": "node dist/index.js",
     "lint": "tsc --noEmit && eslint src",
     "test": "vitest",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "prepare": "husky"
   },
   "keywords": [
     "cli",
@@ -37,32 +38,32 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Piebald-AI/tweakcc.git"
+    "url": "git+https://github.com/Piebald-AI/afterburner.git"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
-    "@types/node": "^20.19.10",
-    "@types/react": "^18.3.23",
-    "@vitejs/plugin-react-oxc": "^0.3.0",
-    "eslint": "^9.33.0",
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "prettier": "^3.6.2",
-    "rollup-plugin-node-externals": "^8.0.1",
-    "tsx": "^4.20.3",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.0",
-    "vite": "npm:rolldown-vite@^7.1.0",
+    "rollup-plugin-node-externals": "^8.1.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "npm:rolldown-vite@^7.1.15",
     "vitest": "^3.2.4"
   },
   "dependencies": {
     "@types/figlet": "^1.7.0",
-    "chalk": "^5.5.0",
-    "commander": "^14.0.0",
-    "figlet": "^1.8.2",
-    "globby": "^14.1.0",
-    "ink": "^6.1.0",
-    "ink-link": "^4.1.0",
-    "react": "^19.1.1"
+    "chalk": "^5.6.2",
+    "commander": "^14.0.1",
+    "figlet": "^1.9.3",
+    "globby": "^15.0.0",
+    "ink": "^6.3.1",
+    "ink-link": "^5.0.0",
+    "react": "^19.2.0"
   }
 }

@@ -5,17 +5,17 @@ import { LocationResult, showDiff } from './index.js';
 export function getWelcomeMessageLocation(
   oldFile: string
 ): LocationResult | null {
-  // Pattern: " Welcome to ",q9.createElement(T,{bold:!0},"Claude Code"),"!"
+  // Pattern: " Welcome to ",q9.createElement(T,{bold:!0},"Github Copilot"),"!"
   const pattern =
-    /" Welcome to ",[$\w]+\.createElement\([^,]+,\{bold:!0\},"Claude Code"\),"!"/;
+    /" Welcome to ",[$\w]+\.createElement\([^,]+,\{bold:!0\},"Github Copilot"\),"!"/;
   const match = oldFile.match(pattern);
 
   if (match && match.index !== undefined) {
-    const claudeCodeIndex = match[0].indexOf('"Claude Code"');
-    if (claudeCodeIndex !== -1) {
+    const CopilotIndex = match[0].indexOf('"Github Copilot"');
+    if (CopilotIndex !== -1) {
       return {
-        startIndex: match.index + claudeCodeIndex,
-        endIndex: match.index + claudeCodeIndex + '"Claude Code"'.length,
+        startIndex: match.index + CopilotIndex,
+        endIndex: match.index + CopilotIndex + '"Github Copilot"'.length,
       };
     }
   }

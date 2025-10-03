@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Box, Text, useInput } from 'ink';
-import { getCurrentClaudeCodeTheme } from '../utils/misc.js';
+import { getCurrentCopilotTheme } from '../utils/misc.js';
 import { DEFAULT_SETTINGS } from '../utils/types.js';
 import { SettingsContext } from '../App.js';
 import Header from './Header.js';
@@ -94,7 +94,7 @@ export function ThinkingStyleView({ onBack }: ThinkingStyleViewProps) {
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
 
   // Get current Claude theme and color
-  const currentThemeId = getCurrentClaudeCodeTheme();
+  const currentThemeId = getCurrentCopilotTheme();
   const currentTheme =
     themes.find(t => t.id === currentThemeId) ||
     themes.find(t => t.id === 'dark');

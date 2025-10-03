@@ -2,7 +2,7 @@
 
 import { LocationResult, showDiff } from './index.js';
 
-// Heuristic functions for finding elements in cli.js
+// Heuristic functions for finding elements in index.js
 function getSigninBannerTextLocation(oldFile: string): LocationResult | null {
   // Look for the exact banner text from the document
   const bannerText = ` ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗

@@ -7,7 +7,7 @@ interface ChangeNameViewProps {
 }
 
 export function ChangeNameView({ onBack }: ChangeNameViewProps) {
-  const [inputValue, setInputValue] = useState('Claude Code');
+  const [inputValue, setInputValue] = useState('Github Copilot');
   const [isEditing, setIsEditing] = useState(false);
 
   useInput((input, key) => {
@@ -15,7 +15,7 @@ export function ChangeNameView({ onBack }: ChangeNameViewProps) {
       if (key.return) {
         setIsEditing(false);
       } else if (key.escape) {
-        setInputValue('Claude Code');
+        setInputValue('Github Copilot');
         setIsEditing(false);
       } else if (key.backspace || key.delete) {
         setInputValue(prev => prev.slice(0, -1));

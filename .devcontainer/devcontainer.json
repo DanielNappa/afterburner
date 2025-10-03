@@ -1,0 +1,21 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "Node.js & TypeScript",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node",
+	"features": {
+		"ghcr.io/devcontainers/features/desktop-lite:1": {},
+		"ghcr.io/devcontainers/features/git-lfs:1": {}
+	},
+	"containerEnv": {
+		"DEBIAN_FRONTEND": "noninteractive"
+	},
+	"hostRequirements": {
+		"cpus": 4
+	},
+	"containerUser": "node",
+	"onCreateCommand": {
+        "bunInstall": "curl -fsSL https://bun.com/install | bash && export PATH=\"$HOME/.bun/bin:$PATH\"",
+		"npmInstall": "npm install || true"
+	}
+}

@@ -1,7 +1,7 @@
 import { LocationResult, findChalkVar, showDiff } from './index.js';
 
 /**
- * Finds the location of the version output pattern in Claude Code's cli.js
+ * Finds the location of the version output pattern in Github Copilot's index.js
  */
 export const findVersionOutputLocation = (
   fileContents: string
@@ -9,8 +9,8 @@ export const findVersionOutputLocation = (
   versionLocation: LocationResult;
   sessionIdLocation: LocationResult;
 } | null => {
-  // Pattern: }.VERSION} (Claude Code)
-  const versionPattern = /\}\.VERSION\} \(Claude Code\)/;
+  // Pattern: }.VERSION} (Github Copilot)
+  const versionPattern = /\}\.VERSION\} \(Github Copilot\)/;
   const versionMatch = fileContents.match(versionPattern);
   if (!versionMatch || versionMatch.index === undefined) {
     return null;
@@ -39,11 +39,11 @@ export const findVersionOutputLocation = (
 };
 
 /**
- * Modifies the version output to include tweakcc version
+ * Modifies the version output to include afterburner version
  */
 export const writeVersionOutput = (
   fileContents: string,
-  tweakccVersion: string
+  afterburnerVersion: string
 ): string | null => {
   const locations = findVersionOutputLocation(fileContents);
   if (!locations) {
@@ -55,7 +55,7 @@ export const writeVersionOutput = (
     versionLocation.startIndex,
     versionLocation.endIndex
   );
-  const newText = `${originalVersionText}\\n${tweakccVersion} (tweakcc)`;
+  const newText = `${originalVersionText}\\n${afterburnerVersion} (afterburner)`;
 
   const newFileContents1 =
     fileContents.slice(0, versionLocation.startIndex) +
@@ -76,7 +76,7 @@ export const writeVersionOutput = (
     console.error('patch: versionOutput: failed to find chalk variable');
     return null;
   }
-  const newStatusInfo = `,${r1}.createElement(${r2},null,${r1}.createElement(${r3},{dimColor:!0}," L "),${r1}.createElement(${r3},null,${chalkVar}.rgb(235, 109, 13).bold("tweakcc: v${tweakccVersion}")))`;
+  const newStatusInfo = `,${r1}.createElement(${r2},null,${r1}.createElement(${r3},{dimColor:!0}," L "),${r1}.createElement(${r3},null,${chalkVar}.rgb(235, 109, 13).bold("afterburner: v${afterburnerVersion}")))`;
   const newFileContents2 =
     fileContents.slice(0, sessionIdLocation.startIndex) +
     newStatusInfo +

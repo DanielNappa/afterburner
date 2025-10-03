@@ -84,7 +84,7 @@ export interface Settings {
   inputBox: InputBoxConfig;
 }
 
-export interface TweakccConfig {
+export interface afterburnerConfig {
   ccVersion: string;
   ccInstallationDir: string | null;
   lastModified: string;
@@ -92,7 +92,7 @@ export interface TweakccConfig {
   settings: Settings;
 }
 
-export interface ClaudeCodeInstallationInfo {
+export interface CopilotInstallationInfo {
   cliPath: string;
   packageJsonPath: string;
   version: string;
@@ -102,7 +102,7 @@ export interface StartupCheckInfo {
   wasUpdated: boolean;
   oldVersion: string | null;
   newVersion: string | null;
-  ccInstInfo: ClaudeCodeInstallationInfo;
+  ccInstInfo: CopilotInstallationInfo;
 }
 
 export enum MainMenuItem {
@@ -112,10 +112,10 @@ export enum MainMenuItem {
   THINKING_STYLE = 'Thinking style',
   USER_MESSAGE_DISPLAY = 'User message display',
   INPUT_BOX = 'Input box',
-  APPLY_CHANGES = '*Apply customizations to cli.js',
-  RESTORE_ORIGINAL = 'Restore original Claude Code (preserves tweakcc.json)',
-  OPEN_CONFIG = 'Open tweakcc.json',
-  OPEN_CLI = "Open Claude Code's cli.js",
+  APPLY_CHANGES = '*Apply customizations to index.js',
+  RESTORE_ORIGINAL = 'Restore original Github Copilot (preserves afterburner.json)',
+  OPEN_CONFIG = 'Open afterburner.json',
+  OPEN_CLI = "Open Github Copilot's index.js",
   EXIT = 'Exit',
 }
 
@@ -352,7 +352,7 @@ export const DEFAULT_SETTINGS: Settings = {
   ],
   launchText: {
     method: 'figlet',
-    figletText: 'Claude Code',
+    figletText: 'Github Copilot',
     figletFont: 'ANSI Shadow',
     customText: '',
   },
@@ -633,9 +633,9 @@ export const DEFAULT_SETTINGS: Settings = {
   },
 };
 
-export const CONFIG_DIR = path.join(os.homedir(), '.tweakcc');
+export const CONFIG_DIR = path.join(os.homedir(), '.afterburner');
 export const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json');
-export const CLIJS_BACKUP_FILE = path.join(CONFIG_DIR, 'cli.js.backup');
+export const CLIJS_BACKUP_FILE = path.join(CONFIG_DIR, 'index.js.backup');
 
 export interface SearchPathInfo {
   pattern: string;
@@ -650,7 +650,7 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
     process.platform == 'win32'
       ? os.homedir().replace(/\\/g, '/')
       : os.homedir();
-  const mod = 'node_modules/@anthropic-ai/claude-code';
+  const mod = 'node_modules/@github/copilot';
 
   // Helper function to add a path or glob pattern
   const addPath = (pattern: string, isGlob: boolean = false) => {
@@ -662,7 +662,7 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
     }
   };
 
-  // Local Claude Code installation (#42)
+  // Local Github Copilot installation (#42)
   addPath(`${os.homedir()}/.claude/local/${mod}`);
 
   // Search in custom paths for popular tools.  These are cross-platform paths.
@@ -682,7 +682,7 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
   // prettier-ignore
   if (process.platform == "win32") {
     // volta, npm, yarn, pnpm
-    addPath(`${home}/AppData/Local/Volta/tools/image/packages/@anthropic-ai/claude-code/${mod}`);
+    addPath(`${home}/AppData/Local/Volta/tools/image/packages/@github/copilot/${mod}`);
     addPath(`${home}/AppData/Roaming/npm/${mod}`);
     addPath(`${home}/AppData/Roaming/nvm/*/${mod}`, true);
     addPath(`${home}/AppData/Local/Yarn/config/global/${mod}`);
@@ -786,8 +786,8 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
   return pathInfos;
 };
 
-export const CLIJS_SEARCH_PATH_INFO: SearchPathInfo[] =
+export const INDEXJS_SEARCH_PATH_INFO: SearchPathInfo[] =
   getClijsSearchPathsWithInfo();
-export const CLIJS_SEARCH_PATHS: string[] = CLIJS_SEARCH_PATH_INFO.flatMap(
+export const CLIJS_SEARCH_PATHS: string[] = INDEXJS_SEARCH_PATH_INFO.flatMap(
   info => info.expandedPaths
 );

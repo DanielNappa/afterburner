@@ -6,7 +6,7 @@ import {
   UserMessageDisplayElementConfig,
   DEFAULT_SETTINGS,
 } from '../utils/types.js';
-import { getCurrentClaudeCodeTheme } from '../utils/misc.js';
+import { getCurrentCopilotTheme } from '../utils/misc.js';
 import Header from './Header.js';
 
 interface UserMessageDisplayViewProps {
@@ -70,7 +70,7 @@ export function UserMessageDisplayView({
   const [originalColor, setOriginalColor] = useState('');
 
   // Get current theme
-  const currentThemeId = getCurrentClaudeCodeTheme();
+  const currentThemeId = getCurrentCopilotTheme();
   const currentTheme =
     settings.themes?.find(t => t.id === currentThemeId) || settings.themes?.[0];
 
@@ -570,7 +570,7 @@ export function UserMessageDisplayView({
             {/* Before (Original) */}
             <Box flexDirection="column" width="50%">
               <Box marginBottom={1}>
-                <Text underline>Before (Claude Code default):</Text>
+                <Text underline>Before (Github Copilot default):</Text>
               </Box>
               <Box marginLeft={1}>
                 <Text color={currentTheme?.colors?.secondaryText || '#888888'}>

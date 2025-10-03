@@ -23,7 +23,7 @@ export const writeContextLimit = (oldFile: string): string | null => {
     return null;
   }
 
-  const newFnDef = `if(process.env.CLAUDE_CODE_CONTEXT_LIMIT)return Number(process.env.CLAUDE_CODE_CONTEXT_LIMIT);`;
+  const newFnDef = `if(process.env.GITHUB_COPILOT_CONTEXT_LIMIT)return Number(process.env.GITHUB_COPILOT_CONTEXT_LIMIT);`;
 
   const newFile = oldFile.slice(0, index) + newFnDef + oldFile.slice(index);
 

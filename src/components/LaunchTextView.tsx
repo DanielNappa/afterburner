@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Box, Text, useInput, useStdout } from 'ink';
 import figlet from 'figlet';
-import { getCurrentClaudeCodeTheme } from '../utils/misc.js';
+import { getCurrentCopilotTheme } from '../utils/misc.js';
 import { SettingsContext } from '../App.js';
 import Header from './Header.js';
 
@@ -46,7 +46,7 @@ export function LaunchTextView({ onBack }: LaunchTextViewProps) {
   );
 
   // Get current Claude theme and color
-  const currentThemeId = getCurrentClaudeCodeTheme();
+  const currentThemeId = getCurrentCopilotTheme();
   const currentTheme =
     themes.find(t => t.id === currentThemeId) ||
     themes.find(t => t.id === 'dark');
@@ -476,7 +476,7 @@ export function LaunchTextView({ onBack }: LaunchTextViewProps) {
           <Box flexDirection="column" marginBottom={1}>
             <Text color={claudeColor}>╭──────────────────────────╮</Text>
             <Text>
-              <Text color={claudeColor}>│ ✻</Text> Welcome to Claude Code{' '}
+              <Text color={claudeColor}>│ ✻</Text> Welcome to Github Copilot{' '}
               <Text color={claudeColor}>│</Text>
             </Text>
             <Text color={claudeColor}>╰──────────────────────────╯</Text>
@@ -490,7 +490,7 @@ export function LaunchTextView({ onBack }: LaunchTextViewProps) {
 
           <Box marginTop={1}>
             <Text wrap="truncate-end">
-              Claude Code can now be used with your Claude subscription or
+              Github Copilot can now be used with your Claude subscription or
               billed based on API usage through your Console account.
             </Text>
           </Box>

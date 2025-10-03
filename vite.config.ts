@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
-import react from '@vitejs/plugin-react-oxc';
+import react from '@vitejs/plugin-react';
 import nodeExternals from 'rollup-plugin-node-externals';
 
 export default defineConfig(({ mode }) => ({
