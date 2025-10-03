@@ -60,7 +60,7 @@ describe('config.ts', () => {
       const result = await config.readConfigFile();
       expect(result).toEqual({
         ccVersion: '',
-        ccInstallationDir: null,
+        installationDir: null,
         lastModified: expect.any(String),
         changesApplied: true,
         settings: DEFAULT_SETTINGS,
@@ -110,11 +110,11 @@ describe('config.ts', () => {
         .mockResolvedValue(undefined);
       vi.spyOn(fs, 'chmod').mockResolvedValue(undefined);
 
-      const ccInstInfo = {
+      const instInfo = {
         cliPath: '/fake/path/index.js',
       } as CopilotInstallationInfo;
 
-      await config.restoreClijsFromBackup(ccInstInfo);
+      await config.restoreClijsFromBackup(instInfo);
 
       // Verify the backup was read
       expect(readFileSpy).toHaveBeenCalledWith(
@@ -126,7 +126,7 @@ describe('config.ts', () => {
 
       // Find the call that wrote to index.js (not config.json)
       const cliWriteCall = writeFileSpy.mock.calls.find(
-        call => call[0] === ccInstInfo.cliPath
+        call => call[0] === instInfo.cliPath
       );
 
       expect(cliWriteCall).toBeDefined();
@@ -152,7 +152,7 @@ describe('config.ts', () => {
 
     it('should find the installation and return the correct info', async () => {
       const mockConfig = {
-        ccInstallationDir: null,
+        installationDir: null,
         changesApplied: false,
         ccVersion: '',
         lastModified: '',
@@ -192,7 +192,7 @@ describe('config.ts', () => {
 
     it('should return null if the installation is not found', async () => {
       const mockConfig = {
-        ccInstallationDir: null,
+        installationDir: null,
         changesApplied: false,
         ccVersion: '',
         lastModified: '',
@@ -211,7 +211,7 @@ describe('config.ts', () => {
 
   describe('startupCheck', () => {
     it('should backup index.js if no backup exists', async () => {
-      const ccInstInfo: CopilotInstallationInfo = {
+      const instInfo: CopilotInstallationInfo = {
         cliPath: '/fake/path/index.js',
         version: '1.0.0',
         packageJsonPath: '/fake/path/package.json',
@@ -230,7 +230,7 @@ describe('config.ts', () => {
         JSON.stringify({ ccVersion: '1.0.0' })
       );
       vi.spyOn(fs, 'writeFile').mockResolvedValue(undefined);
-      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(ccInstInfo);
+      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(instInfo);
 
       await config.startupCheck();
 
@@ -238,7 +238,7 @@ describe('config.ts', () => {
     });
 
     it('should re-backup if the version has changed', async () => {
-      const ccInstInfo: CopilotInstallationInfo = {
+      const instInfo: CopilotInstallationInfo = {
         cliPath: '/fake/path/index.js',
         version: '2.0.0',
         packageJsonPath: '/fake/path/package.json',
@@ -250,7 +250,7 @@ describe('config.ts', () => {
         JSON.stringify({ ccVersion: '1.0.0' })
       );
       vi.spyOn(fs, 'writeFile').mockResolvedValue(undefined);
-      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(ccInstInfo);
+      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(instInfo);
 
       const result = await config.startupCheck();
 

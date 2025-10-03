@@ -11,6 +11,8 @@
     "build": "tsc -b && vite build",
     "watch": "vite build --watch --mode development",
     "start": "node dist/index.js",
+    "start:bun": "bun run dist/index.js",
+    "dev": "bun run src/index.tsx",
     "lint": "gts lint",
     "test": "vitest",
     "format": "prettier --write src",
@@ -42,7 +44,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Piebald-AI/afterburner.git"
+    "url": "git+https://github.com/DanielNappa/afterburner.git"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

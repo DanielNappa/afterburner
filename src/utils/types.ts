@@ -86,7 +86,7 @@ export interface Settings {
 
 export interface afterburnerConfig {
   ccVersion: string;
-  ccInstallationDir: string | null;
+  installationDir: string | null;
   lastModified: string;
   changesApplied: boolean;
   settings: Settings;
@@ -102,7 +102,7 @@ export interface StartupCheckInfo {
   wasUpdated: boolean;
   oldVersion: string | null;
   newVersion: string | null;
-  ccInstInfo: CopilotInstallationInfo;
+  instInfo: CopilotInstallationInfo;
 }
 
 export enum MainMenuItem {
@@ -112,10 +112,10 @@ export enum MainMenuItem {
   THINKING_STYLE = 'Thinking style',
   USER_MESSAGE_DISPLAY = 'User message display',
   INPUT_BOX = 'Input box',
-  APPLY_CHANGES = '*Apply customizations to index.js',
-  RESTORE_ORIGINAL = 'Restore original Github Copilot (preserves afterburner.json)',
+  APPLY_CHANGES = '*Apply patches to index.js',
+  RESTORE_ORIGINAL = 'Restore original Github Copilot CLI (preserves afterburner.json)',
   OPEN_CONFIG = 'Open afterburner.json',
-  OPEN_CLI = "Open Github Copilot's index.js",
+  OPEN_CLI = "Open Github Copilot CLI's index.js",
   EXIT = 'Exit',
 }
 
@@ -352,7 +352,7 @@ export const DEFAULT_SETTINGS: Settings = {
   ],
   launchText: {
     method: 'figlet',
-    figletText: 'Github Copilot',
+    figletText: 'Github Copilot CLI',
     figletFont: 'ANSI Shadow',
     customText: '',
   },
@@ -662,7 +662,7 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
     }
   };
 
-  // Local Github Copilot installation (#42)
+  // Local Github Copilot CLI installation (#42)
   addPath(`${os.homedir()}/.claude/local/${mod}`);
 
   // Search in custom paths for popular tools.  These are cross-platform paths.

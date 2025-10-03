@@ -113,13 +113,13 @@ export const findChalkVar = (fileContents: string): string | undefined => {
 
 export const applyCustomization = async (
   config: afterburnerConfig,
-  ccInstInfo: CopilotInstallationInfo
+  instInfo: CopilotInstallationInfo
 ): Promise<afterburnerConfig> => {
   // Clean up any existing customizations, which will likely break the heuristics, by restoring the
   // original file from the backup.
-  await restoreClijsFromBackup(ccInstInfo);
+  await restoreClijsFromBackup(instInfo);
 
-  let content = await fs.readFile(ccInstInfo.cliPath, { encoding: 'utf8' });
+  let content = await fs.readFile(instInfo.cliPath, { encoding: 'utf8' });
 
   // Apply themes
   let result: string | null = null;
@@ -252,7 +252,7 @@ export const applyCustomization = async (
   if ((result = writeVersionOutput(content, '1.5.5'))) content = result;
 
   // Replace the file, breaking hard links and preserving permissions
-  await replaceFileBreakingHardLinks(ccInstInfo.cliPath, content, 'patch');
+  await replaceFileBreakingHardLinks(instInfo.cliPath, content, 'patch');
 
   return await updateConfigFile(config => {
     config.changesApplied = true;

@@ -26,7 +26,7 @@ const main = async () => {
 
   // Handle --apply flag for non-interactive mode
   if (options.apply) {
-    console.log('Applying saved customizations to Github Copilot...');
+    console.log('Applying saved customizations to Github Copilot CLI...');
     console.log(`Configuration saved at: ${CONFIG_FILE}`);
 
     try {
@@ -38,11 +38,11 @@ const main = async () => {
         process.exit(1);
       }
 
-      // Find Github Copilot installation
+      // Find Github Copilot CLI installation
       const startupCheckInfo = await startupCheck();
 
-      if (!startupCheckInfo || !startupCheckInfo.ccInstInfo) {
-        console.error(`Cannot find Github Copilot's index.js`);
+      if (!startupCheckInfo || !startupCheckInfo.instInfo) {
+        console.error(`Cannot find Github Copilot CLI's index.js`);
         console.error('Searched at the following locations:');
         INDEXJS_SEARCH_PATH_INFO.forEach(info => {
           if (info.isGlob) {
@@ -62,13 +62,13 @@ const main = async () => {
       }
 
       console.log(
-        `Found Github Copilot at: ${startupCheckInfo.ccInstInfo.cliPath}`
+        `Found Github Copilot CLI at: ${startupCheckInfo.instInfo.cliPath}`
       );
-      console.log(`Version: ${startupCheckInfo.ccInstInfo.version}`);
+      console.log(`Version: ${startupCheckInfo.instInfo.version}`);
 
       // Apply the customizations
       console.log('Applying customizations...');
-      await applyCustomization(config, startupCheckInfo.ccInstInfo);
+      await applyCustomization(config, startupCheckInfo.instInfo);
       console.log('Customizations applied successfully!');
       process.exit(0);
     } catch (error) {
@@ -102,7 +102,7 @@ const main = async () => {
       }).join('\n');
     };
 
-    console.error(`Cannot find Github Copilot's index.js -- do you have Github Copilot installed?
+    console.error(`Cannot find Github Copilot CLI's index.js -- do you have Github Copilot CLI installed?
 
 Searched at the following locations:
 ${formatSearchPaths()}
@@ -110,10 +110,10 @@ ${formatSearchPaths()}
 If you have it installed but it's in a location not listed above, please open an issue at
 https://github.com/piebald-ai/afterburner/issues and tell us where you have it--we'll add that location
 to our search list and release an update today!  And in the meantime, you can get afterburner working
-by manually specifying that location in ${CONFIG_FILE} with the "ccInstallationDir" property:
+by manually specifying that location in ${CONFIG_FILE} with the "installationDir" property:
 
 {
-  "ccInstallationDir": "${
+  "installationDir": "${
     process.platform == 'win32'
       ? 'C:\\\\absolute\\\\path\\\\to\\\\node_modules\\\\@github\\\\claude-code'
       : '/absolute/path/to/node_modules/@github/copilot'
@@ -122,7 +122,7 @@ by manually specifying that location in ${CONFIG_FILE} with the "ccInstallationD
 
 Notes:
 - Don't include index.js in the path.
-- Don't specify the path to your Github Copilot executable's directory.  It needs to be the path
+- Don't specify the path to your Github Copilot CLI executable's directory.  It needs to be the path
   to the folder that contains **index.js**.
 - Please also open an issue so that we can add your path to the search list for all users!
 `);

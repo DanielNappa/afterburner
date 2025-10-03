@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.5.2](https://github.com/Piebald-AI/afterburner/releases/tag/v1.5.2) - 2025-09-11
 
-- **New:** Make /cost work with Pro/Max subscriptions (See Github Copilot issue [#1109](https://github.com/anthropics/claude-code/issues/1109)) (#91) - @bl-ue
+- **New:** Make /cost work with Pro/Max subscriptions (See Github Copilot CLI issue [#1109](https://github.com/anthropics/claude-code/issues/1109)) (#91) - @bl-ue
 - Remove colors and emoji from --apply output (#92) - @bl-ue
 
 ## [v1.5.1](https://github.com/Piebald-AI/afterburner/releases/tag/v1.5.1) - 2025-09-09
@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.5.0](https://github.com/Piebald-AI/afterburner/releases/tag/v1.5.0) - 2025-09-08
 
-- **New:** Add all the Anthropic models to Github Copilot's /model command (#82) - @bl-ue
+- **New:** Add all the Anthropic models to Github Copilot CLI's /model command (#82) - @bl-ue
 - Restore index.js permissions before deleting it and recreating it to break link networks (#81) - @bl-ue
 
 ## [v1.4.2](https://github.com/Piebald-AI/afterburner/releases/tag/v1.4.2) - 2025-09-08
@@ -46,11 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.4.1](https://github.com/Piebald-AI/afterburner/releases/tag/v1.4.1) - 2025-09-07
 
-- Fix a bug where resetting the past user message's prefix and content background/foreground would set them both to black, making them unreadable in Github Copilot (see https://github.com/Piebald-AI/afterburner/issues/69#issuecomment-3263942674) (#75) - @bl-ue
+- Fix a bug where resetting the past user message's prefix and content background/foreground would set them both to black, making them unreadable in Github Copilot CLI (see https://github.com/Piebald-AI/afterburner/issues/69#issuecomment-3263942674) (#75) - @bl-ue
 
 ## [v1.4.0](https://github.com/Piebald-AI/afterburner/releases/tag/v1.4.0) - 2025-09-06
 
-- **New:** Add a feature to remove the border from Github Copilot's input box (#72) - @bl-ue
+- **New:** Add a feature to remove the border from Github Copilot CLI's input box (#72) - @bl-ue
 - **New:** User message display customization (#71) - @bl-ue
 
 ## [v1.3.0](https://github.com/Piebald-AI/afterburner/releases/tag/v1.3.0) - 2025-09-02
@@ -76,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.2.1](https://github.com/Piebald-AI/afterburner/releases/tag/v1.2.1) - 2025-08-26
 
-- **New:** feat: add welcome message customization to replace 'Github Copilot' with custom text (#39) - @patrickjaja
+- **New:** feat: add welcome message customization to replace 'Github Copilot CLI' with custom text (#39) - @patrickjaja
 - fix(patching): include $ in matched identifier names (#43) - @bl-ue
 - feat(search): support local installation, fix ~/.npm* paths (#44) - @bl-ue
 
@@ -87,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v1.1.4](https://github.com/Piebald-AI/afterburner/releases/tag/v1.1.4) - 2025-08-25
 
 - **New:** `--apply` CLI option to apply stored customizations without interactive UI (#33) - @patrickjaja
-- Updated patching logic to work with Github Copilot 1.0.89 (#34) - @bl-ue
+- Updated patching logic to work with Github Copilot CLI 1.0.89 (#34) - @bl-ue
 
 ## [v1.1.3](https://github.com/Piebald-AI/afterburner/releases/tag/v1.1.3) - 2025-08-24
 
@@ -97,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support thinking phases with multiple characters by editing the container's width in CC
 - Stop showing subagent colors to reduce vertical space usage in preview
-- Don't show the 'Github Copilot was updated ...' message on initial startup
+- Don't show the 'Github Copilot CLI was updated ...' message on initial startup
 
 ## [v1.1.1](https://github.com/Piebald-AI/afterburner/releases/tag/v1.1.1) - 2025-08-21
 
@@ -107,7 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v1.1.0](https://github.com/Piebald-AI/afterburner/releases/tag/v1.1.0) - 2025-08-19
 
 - **New:** Support for new colors (claudeShimmer, ide, and subagent-related ones) (closes #26)
-- **New:** Add new verbs from Github Copilot ~1.0.83
+- **New:** Add new verbs from Github Copilot CLI ~1.0.83
 - **New:** Add paths for common operating systems, package managers, and Node managers
 - Fix patching of thinking verbs (closes #21)
 - Fix support for thinking verb punctuation and generalize to thinking verb format (closes #23)
@@ -117,7 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v1.0.3](https://github.com/Piebald-AI/afterburner/releases/tag/v1.0.3) - 2025-08-10
 
 - **New:** Support pasting colors into the picker and theme editor (#14) - @bl-ue
-- Works with Github Copilot 1.0.72
+- Works with Github Copilot CLI 1.0.72
 - Remove hardcoded "white" color
 - Upgraded dependencies
 
@@ -135,4 +135,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v1.0.0](https://github.com/Piebald-AI/afterburner/releases/tag/v1.0.0) - 2025-07-25
 
-- Initial release with theme customization for Github Copilot
+- Initial release with theme customization for Github Copilot CLI

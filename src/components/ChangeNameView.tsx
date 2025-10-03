@@ -7,7 +7,7 @@ interface ChangeNameViewProps {
 }
 
 export function ChangeNameView({ onBack }: ChangeNameViewProps) {
-  const [inputValue, setInputValue] = useState('Github Copilot');
+  const [inputValue, setInputValue] = useState('Github Copilot CLI');
   const [isEditing, setIsEditing] = useState(false);
 
   useInput((input, key) => {
@@ -15,7 +15,7 @@ export function ChangeNameView({ onBack }: ChangeNameViewProps) {
       if (key.return) {
         setIsEditing(false);
       } else if (key.escape) {
-        setInputValue('Github Copilot');
+        setInputValue('Github Copilot CLI');
         setIsEditing(false);
       } else if (key.backspace || key.delete) {
         setInputValue(prev => prev.slice(0, -1));

@@ -40,7 +40,7 @@ export default function App({
     changesApplied: false,
     ccVersion: '',
     lastModified: '',
-    ccInstallationDir: null,
+    installationDir: null,
   });
 
   // Load the config file.
@@ -86,7 +86,7 @@ export default function App({
   useEffect(() => {
     if (startupCheckInfo.wasUpdated && startupCheckInfo.oldVersion) {
       setNotification({
-        message: `Your Github Copilot installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
+        message: `Your Github Copilot CLI installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
 (However, your customization are still remembered in ${CONFIG_FILE}.)
 Please reapply your changes below.`,
         type: 'warning',
@@ -118,12 +118,12 @@ Please reapply your changes below.`,
         setCurrentView(item);
         break;
       case MainMenuItem.APPLY_CHANGES:
-        if (startupCheckInfo.ccInstInfo) {
+        if (startupCheckInfo.instInfo) {
           setNotification({
             message: 'Applying patches...',
             type: 'info',
           });
-          applyCustomization(config, startupCheckInfo.ccInstInfo).then(
+          applyCustomization(config, startupCheckInfo.instInfo).then(
             newConfig => {
               setConfig(newConfig);
               setNotification({
@@ -135,10 +135,10 @@ Please reapply your changes below.`,
         }
         break;
       case MainMenuItem.RESTORE_ORIGINAL:
-        if (startupCheckInfo.ccInstInfo) {
-          restoreClijsFromBackup(startupCheckInfo.ccInstInfo).then(() => {
+        if (startupCheckInfo.instInfo) {
+          restoreClijsFromBackup(startupCheckInfo.instInfo).then(() => {
             setNotification({
-              message: 'Original Github Copilot restored successfully!',
+              message: 'Original Github Copilot CLI restored successfully!',
               type: 'success',
             });
             updateSettings(() => {});
@@ -149,8 +149,8 @@ Please reapply your changes below.`,
         revealFileInExplorer(CONFIG_FILE);
         break;
       case MainMenuItem.OPEN_CLI:
-        if (startupCheckInfo.ccInstInfo) {
-          revealFileInExplorer(startupCheckInfo.ccInstInfo.cliPath);
+        if (startupCheckInfo.instInfo) {
+          revealFileInExplorer(startupCheckInfo.instInfo.cliPath);
         }
         break;
       case MainMenuItem.EXIT:

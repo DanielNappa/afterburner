@@ -1,7 +1,7 @@
 import { LocationResult, findChalkVar, showDiff } from './index.js';
 
 /**
- * Finds the location of the version output pattern in Github Copilot's index.js
+ * Finds the location of the version output pattern in Github Copilot CLI's index.js
  */
 export const findVersionOutputLocation = (
   fileContents: string
@@ -9,8 +9,8 @@ export const findVersionOutputLocation = (
   versionLocation: LocationResult;
   sessionIdLocation: LocationResult;
 } | null => {
-  // Pattern: }.VERSION} (Github Copilot)
-  const versionPattern = /\}\.VERSION\} \(Github Copilot\)/;
+  // Pattern: }.VERSION} (Github Copilot CLI)
+  const versionPattern = /\}\.VERSION\} \(Github Copilot CLI\)/;
   const versionMatch = fileContents.match(versionPattern);
   if (!versionMatch || versionMatch.index === undefined) {
     return null;

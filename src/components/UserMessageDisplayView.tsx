@@ -570,7 +570,7 @@ export function UserMessageDisplayView({
             {/* Before (Original) */}
             <Box flexDirection="column" width="50%">
               <Box marginBottom={1}>
-                <Text underline>Before (Github Copilot default):</Text>
+                <Text underline>Before (Github Copilot CLI default):</Text>
               </Box>
               <Box marginLeft={1}>
                 <Text color={currentTheme?.colors?.secondaryText || '#888888'}>

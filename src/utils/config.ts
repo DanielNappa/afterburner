@@ -26,7 +26,7 @@ let lastConfig: afterburnerConfig = {
   changesApplied: false,
   ccVersion: '',
   lastModified: '',
-  ccInstallationDir: null,
+  installationDir: null,
 };
 
 /**
@@ -35,7 +35,7 @@ let lastConfig: afterburnerConfig = {
 export const readConfigFile = async (): Promise<afterburnerConfig> => {
   const config: afterburnerConfig = {
     ccVersion: '',
-    ccInstallationDir: null,
+    installationDir: null,
     lastModified: new Date().toISOString(),
     changesApplied: true,
     settings: DEFAULT_SETTINGS,
@@ -129,10 +129,10 @@ const saveConfig = async (config: afterburnerConfig): Promise<void> => {
  * Unlinks the file first to break any hard links (e.g., from Bun's linking system).
  */
 export const restoreClijsFromBackup = async (
-  ccInstInfo: CopilotInstallationInfo
+  instInfo: CopilotInstallationInfo
 ): Promise<boolean> => {
   if (isDebug()) {
-    console.log(`Restoring index.js from backup to ${ccInstInfo.cliPath}`);
+    console.log(`Restoring index.js from backup to ${instInfo.cliPath}`);
   }
 
   // Read the backup content
@@ -140,7 +140,7 @@ export const restoreClijsFromBackup = async (
 
   // Replace the file, breaking hard links and preserving permissions
   await replaceFileBreakingHardLinks(
-    ccInstInfo.cliPath,
+    instInfo.cliPath,
     backupContent,
     'restore'
   );
@@ -153,20 +153,20 @@ export const restoreClijsFromBackup = async (
 };
 
 /**
- * Searches for the Github Copilot installation in the default locations.
+ * Searches for the Github Copilot CLI installation in the default locations.
  */
 export const findCopilotInstallation = async (
   config: afterburnerConfig
 ): Promise<CopilotInstallationInfo | null> => {
-  if (config.ccInstallationDir) {
-    INDEXJS_SEARCH_PATHS.unshift(config.ccInstallationDir);
+  if (config.installationDir) {
+    INDEXJS_SEARCH_PATHS.unshift(config.installationDir);
   }
 
   for (const searchPath of INDEXJS_SEARCH_PATHS) {
     try {
       if (isDebug()) {
         console.log(
-          `Searching for Github Copilot index.js file at ${searchPath}`
+          `Searching for Github Copilot CLI index.js file at ${searchPath}`
         );
       }
 
@@ -177,7 +177,7 @@ export const findCopilotInstallation = async (
       }
       if (isDebug()) {
         console.log(
-          `Found Github Copilot index.js file at ${searchPath}; checking hash...`
+          `Found Github Copilot CLI index.js file at ${searchPath}; checking hash...`
         );
         console.log(`SHA256 hash: ${await hashFileInChunks(cliPath)}`);
       }
@@ -221,15 +221,15 @@ export const findCopilotInstallation = async (
   return null;
 };
 
-const backupClijs = async (ccInstInfo: CopilotInstallationInfo) => {
+const backupClijs = async (instInfo: CopilotInstallationInfo) => {
   await ensureConfigDir();
   if (isDebug()) {
     console.log(`Backing up index.js to ${CLIJS_BACKUP_FILE}`);
   }
-  await fs.copyFile(ccInstInfo.cliPath, CLIJS_BACKUP_FILE);
+  await fs.copyFile(instInfo.cliPath, CLIJS_BACKUP_FILE);
   await updateConfigFile(config => {
     config.changesApplied = false;
-    config.ccVersion = ccInstInfo.version;
+    config.ccVersion = instInfo.version;
   });
 };
 
@@ -246,18 +246,18 @@ async function doesFileExist(filePath: string): Promise<boolean> {
 }
 
 /**
- * Performs startup checking: finding Github Copilot, creating a backup if necessary, checking if
+ * Performs startup checking: finding Github Copilot CLI, creating a backup if necessary, checking if
  * it's been updated.  If true, an update is required.
  */
 export async function startupCheck(): Promise<StartupCheckInfo | null> {
   const config = await readConfigFile();
 
-  const ccInstInfo = await findCopilotInstallation(config);
-  if (!ccInstInfo) {
+  const instInfo = await findCopilotInstallation(config);
+  if (!instInfo) {
     return null;
   }
 
-  const realVersion = ccInstInfo.version;
+  const realVersion = instInfo.version;
   const backedUpVersion = config.ccVersion;
 
   // Backup index.js if we don't have any backup yet.
@@ -268,7 +268,7 @@ export async function startupCheck(): Promise<StartupCheckInfo | null> {
         `startupCheck: ${CLIJS_BACKUP_FILE} not found; backing up index.js`
       );
     }
-    await backupClijs(ccInstInfo);
+    await backupClijs(instInfo);
     hasBackedUp = true;
   }
 
@@ -285,14 +285,14 @@ export async function startupCheck(): Promise<StartupCheckInfo | null> {
         );
       }
       await fs.unlink(CLIJS_BACKUP_FILE);
-      await backupClijs(ccInstInfo);
+      await backupClijs(instInfo);
     }
 
     return {
       wasUpdated: true,
       oldVersion: backedUpVersion,
       newVersion: realVersion,
-      ccInstInfo,
+      instInfo,
     };
   }
 
@@ -300,6 +300,6 @@ export async function startupCheck(): Promise<StartupCheckInfo | null> {
     wasUpdated: false,
     oldVersion: null,
     newVersion: null,
-    ccInstInfo,
+    instInfo,
   };
 }
