@@ -1,7 +1,7 @@
 import figlet from 'figlet';
 import * as fs from 'node:fs/promises';
 import { restoreClijsFromBackup, updateConfigFile } from '../config.js';
-import { CopilotInstallationInfo, afterburnerConfig } from '../types.js';
+import { CopilotInstallationInfo, AfterburnerConfig } from '../types.js';
 import { isDebug, replaceFileBreakingHardLinks } from '../misc.js';
 
 // Notes to patch-writers:
@@ -34,6 +34,7 @@ import { writeUserMessageDisplay } from './userMessageDisplay.js';
 import { writeVerboseProperty } from './verboseProperty.js';
 import { writeWelcomeMessage } from './welcomeMessage.js';
 import { writeModelCustomizations } from './modelSelector.js';
+import { writeModelExtensions } from './modelExtensions.js';
 import { writeIgnoreMaxSubscription } from './ignoreMaxSubscription.js';
 import { writeVersionOutput } from './versionOutput.js';
 
@@ -112,9 +113,9 @@ export const findChalkVar = (fileContents: string): string | undefined => {
 };
 
 export const applyCustomization = async (
-  config: afterburnerConfig,
+  config: AfterburnerConfig,
   instInfo: CopilotInstallationInfo
-): Promise<afterburnerConfig> => {
+): Promise<AfterburnerConfig> => {
   // Clean up any existing customizations, which will likely break the heuristics, by restoring the
   // original file from the backup.
   await restoreClijsFromBackup(instInfo);
@@ -241,6 +242,9 @@ export const applyCustomization = async (
 
   // Apply model customizations (known names, mapping, selector options) (always enabled)
   if ((result = writeModelCustomizations(content))) content = result;
+
+  // Apply model extensions patch for broader model support (always enabled)
+  if ((result = writeModelExtensions(content))) content = result;
 
   // Apply show more items in select menus patch (always enabled)
   if ((result = writeShowMoreItemsInSelectMenus(content, 25))) content = result;

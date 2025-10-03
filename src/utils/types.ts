@@ -84,7 +84,7 @@ export interface Settings {
   inputBox: InputBoxConfig;
 }
 
-export interface afterburnerConfig {
+export interface AfterburnerConfig {
   ccVersion: string;
   installationDir: string | null;
   lastModified: string;

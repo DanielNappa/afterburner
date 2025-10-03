@@ -16,7 +16,7 @@
     "lint": "gts lint",
     "test": "vitest",
     "format": "prettier --write src",
-    "prepare": "husky && npm run compile",
+    "prepare": "npm run compile",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
