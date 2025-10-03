@@ -96,7 +96,10 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
       <Box marginBottom={1}>
         <Text color="yellow">
           ⭐ <Text bold>Star the repo at </Text>
-          <Link url="https://github.com/Piebald-AI/afterburner" fallback={false}>
+          <Link
+            url="https://github.com/Piebald-AI/afterburner"
+            fallback={false}
+          >
             <Text bold color="cyan">
               https://github.com/Piebald-AI/afterburner
             </Text>

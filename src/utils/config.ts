@@ -165,7 +165,9 @@ export const findCopilotInstallation = async (
   for (const searchPath of INDEXJS_SEARCH_PATHS) {
     try {
       if (isDebug()) {
-        console.log(`Searching for Github Copilot index.js file at ${searchPath}`);
+        console.log(
+          `Searching for Github Copilot index.js file at ${searchPath}`
+        );
       }
 
       // Check for index.js

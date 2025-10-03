@@ -12,9 +12,17 @@ import type { Stats } from 'node:fs';
 import path from 'node:path';
 import * as misc from './misc.js';
 
-vi.mock('node:fs/promises', () => ({  default: {  readFile: vi.fn(),  writeFile:
-  vi.fn(),  mkdir: vi.fn(),  stat: vi.fn(),  unlink: vi.fn(),  chmod: vi.fn(),
-  copyFile: vi.fn(),  }, }));
+vi.mock('node:fs/promises', () => ({
+  default: {
+    readFile: vi.fn(),
+    writeFile: vi.fn(),
+    mkdir: vi.fn(),
+    stat: vi.fn(),
+    unlink: vi.fn(),
+    chmod: vi.fn(),
+    copyFile: vi.fn(),
+  },
+}));
 // Mock the replaceFileBreakingHardLinks function
 vi.spyOn(misc, 'replaceFileBreakingHardLinks').mockImplementation(
   async (filePath, content) => {
@@ -222,9 +230,7 @@ describe('config.ts', () => {
         JSON.stringify({ ccVersion: '1.0.0' })
       );
       vi.spyOn(fs, 'writeFile').mockResolvedValue(undefined);
-      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(
-        ccInstInfo
-      );
+      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(ccInstInfo);
 
       await config.startupCheck();
 
@@ -244,9 +250,7 @@ describe('config.ts', () => {
         JSON.stringify({ ccVersion: '1.0.0' })
       );
       vi.spyOn(fs, 'writeFile').mockResolvedValue(undefined);
-      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(
-        ccInstInfo
-      );
+      vi.spyOn(config, 'findCopilotInstallation').mockResolvedValue(ccInstInfo);
 
       const result = await config.startupCheck();
 
