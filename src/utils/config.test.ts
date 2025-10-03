@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as config from './config.js';
 import {
   CopilotInstallationInfo,
-  CLIJS_SEARCH_PATHS,
+  INDEXJS_SEARCH_PATHS,
   CONFIG_DIR,
   CONFIG_FILE,
   DEFAULT_SETTINGS,
@@ -12,8 +12,9 @@ import type { Stats } from 'node:fs';
 import path from 'node:path';
 import * as misc from './misc.js';
 
-vi.mock('node:fs/promises');
-
+vi.mock('node:fs/promises', () => ({  default: {  readFile: vi.fn(),  writeFile:
+  vi.fn(),  mkdir: vi.fn(),  stat: vi.fn(),  unlink: vi.fn(),  chmod: vi.fn(),
+  copyFile: vi.fn(),  }, }));
 // Mock the replaceFileBreakingHardLinks function
 vi.spyOn(misc, 'replaceFileBreakingHardLinks').mockImplementation(
   async (filePath, content) => {
@@ -128,14 +129,14 @@ describe('config.ts', () => {
   describe('findCopilotInstallation', () => {
     it('should include the brew path on non-windows systems', () => {
       if (process.platform !== 'win32') {
-        expect(CLIJS_SEARCH_PATHS).toContain(
+        expect(INDEXJS_SEARCH_PATHS).toContain(
           path.join(
             '/opt',
             'homebrew',
             'lib',
             'node_modules',
-            '@anthropic-ai',
-            'claude-code'
+            '@github',
+            'copilot'
           )
         );
       }
@@ -150,9 +151,9 @@ describe('config.ts', () => {
         settings: DEFAULT_SETTINGS,
       };
 
-      const mockCliPath = path.join(CLIJS_SEARCH_PATHS[0], 'index.js');
+      const mockCliPath = path.join(INDEXJS_SEARCH_PATHS[0], 'index.js');
       const mockPackageJsonPath = path.join(
-        CLIJS_SEARCH_PATHS[0],
+        INDEXJS_SEARCH_PATHS[0],
         'package.json'
       );
       const mockPackageJson = JSON.stringify({ version: '1.2.3' });

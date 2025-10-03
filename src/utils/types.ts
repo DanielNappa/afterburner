@@ -788,6 +788,6 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
 
 export const INDEXJS_SEARCH_PATH_INFO: SearchPathInfo[] =
   getClijsSearchPathsWithInfo();
-export const CLIJS_SEARCH_PATHS: string[] = INDEXJS_SEARCH_PATH_INFO.flatMap(
+export const INDEXJS_SEARCH_PATHS: string[] = INDEXJS_SEARCH_PATH_INFO.flatMap(
   info => info.expandedPaths
 );

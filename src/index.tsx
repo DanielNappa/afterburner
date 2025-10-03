@@ -115,7 +115,7 @@ by manually specifying that location in ${CONFIG_FILE} with the "ccInstallationD
 {
   "ccInstallationDir": "${
     process.platform == 'win32'
-      ? 'C:\\\\absolute\\\\path\\\\to\\\\node_modules\\\\@anthropic-ai\\\\claude-code'
+      ? 'C:\\\\absolute\\\\path\\\\to\\\\node_modules\\\\@github\\\\claude-code'
       : '/absolute/path/to/node_modules/@github/copilot'
   }"
 }

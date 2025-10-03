@@ -3,7 +3,7 @@ import path from 'node:path';
 import {
   CopilotInstallationInfo,
   CLIJS_BACKUP_FILE,
-  CLIJS_SEARCH_PATHS,
+  INDEXJS_SEARCH_PATHS,
   CONFIG_DIR,
   CONFIG_FILE,
   DEFAULT_SETTINGS,
@@ -159,10 +159,10 @@ export const findCopilotInstallation = async (
   config: afterburnerConfig
 ): Promise<CopilotInstallationInfo | null> => {
   if (config.ccInstallationDir) {
-    CLIJS_SEARCH_PATHS.unshift(config.ccInstallationDir);
+    INDEXJS_SEARCH_PATHS.unshift(config.ccInstallationDir);
   }
 
-  for (const searchPath of CLIJS_SEARCH_PATHS) {
+  for (const searchPath of INDEXJS_SEARCH_PATHS) {
     try {
       if (isDebug()) {
         console.log(`Searching for Github Copilot index.js file at ${searchPath}`);

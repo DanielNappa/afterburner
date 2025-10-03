@@ -1,8 +1,8 @@
 {
   "name": "afterburner",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "type": "module",
-  "description": "Command-line tool to customize your Github Copilot theme colors, thinking verbs and more.",
+  "description": "Command-line tool to extend your GitHub CLI to accept more selectable models.",
   "main": "dist/index.js",
   "bin": {
     "afterburner": "./dist/index.js"
@@ -22,12 +22,11 @@
     "ink",
     "react",
     "typescript",
-    "claude",
-    "claude-code",
+    "copilot",
+    "cli",
     "customize",
     "installation",
     "theme",
-    "claude-code-theme",
     "figlet"
   ],
   "author": {
