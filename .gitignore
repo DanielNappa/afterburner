@@ -42,3 +42,9 @@ debug.log
 *.temp
 
 *.tsbuildinfo
+analyze-ast.mjs
+.gitignore
+index-astring.js
+index.js
+index-patched-astring.js
+copilot-astring.js

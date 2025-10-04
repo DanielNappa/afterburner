@@ -128,7 +128,7 @@ const saveConfig = async (config: AfterburnerConfig): Promise<void> => {
  * Restores the original index.js file from the backup.
  * Unlinks the file first to break any hard links (e.g., from Bun's linking system).
  */
-export const restoreClijsFromBackup = async (
+export const restoreIndexJSFromBackup = async (
   instInfo: CopilotInstallationInfo
 ): Promise<boolean> => {
   if (isDebug()) {

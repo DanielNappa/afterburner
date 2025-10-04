@@ -17,7 +17,7 @@ import {
 } from './utils/types.js';
 import {
   readConfigFile,
-  restoreClijsFromBackup,
+  restoreIndexJSFromBackup,
   updateConfigFile,
 } from './utils/config.js';
 import { revealFileInExplorer } from './utils/misc.js';
@@ -136,7 +136,7 @@ Please reapply your changes below.`,
         break;
       case MainMenuItem.RESTORE_ORIGINAL:
         if (startupCheckInfo.instInfo) {
-          restoreClijsFromBackup(startupCheckInfo.instInfo).then(() => {
+          restoreIndexJSFromBackup(startupCheckInfo.instInfo).then(() => {
             setNotification({
               message: 'Original Github Copilot CLI restored successfully!',
               type: 'success',

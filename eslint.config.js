@@ -6,7 +6,7 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    ignores: ['build/**', 'dist/**', '.prettierrc.js'],
+    ignores: ['build/**', 'dist/**', '.prettierrc.js', 'index*.js', 'copilot*.js'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

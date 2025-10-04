@@ -1,6 +1,6 @@
 import figlet from 'figlet';
 import * as fs from 'node:fs/promises';
-import { restoreClijsFromBackup, updateConfigFile } from '../config.js';
+import { restoreIndexJSFromBackup, updateConfigFile } from '../config.js';
 import { CopilotInstallationInfo, AfterburnerConfig } from '../types.js';
 import { isDebug, replaceFileBreakingHardLinks } from '../misc.js';
 
@@ -118,7 +118,7 @@ export const applyCustomization = async (
 ): Promise<AfterburnerConfig> => {
   // Clean up any existing customizations, which will likely break the heuristics, by restoring the
   // original file from the backup.
-  await restoreClijsFromBackup(instInfo);
+  await restoreIndexJSFromBackup(instInfo);
 
   let content = await fs.readFile(instInfo.cliPath, { encoding: 'utf8' });
 
@@ -244,7 +244,10 @@ export const applyCustomization = async (
   if ((result = writeModelCustomizations(content))) content = result;
 
   // Apply model extensions patch for broader model support (always enabled)
-  if ((result = writeModelExtensions(content))) content = result;
+  {
+    const r = await writeModelExtensions(content);
+    if (r) content = r;
+  }
 
   // Apply show more items in select menus patch (always enabled)
   if ((result = writeShowMoreItemsInSelectMenus(content, 25))) content = result;

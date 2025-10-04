@@ -643,7 +643,7 @@ export interface SearchPathInfo {
   expandedPaths: string[];
 }
 
-const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
+const getIndexJSSearchPathsWithInfo = (): SearchPathInfo[] => {
   const pathInfos: SearchPathInfo[] = [];
 
   const home =
@@ -787,7 +787,7 @@ const getClijsSearchPathsWithInfo = (): SearchPathInfo[] => {
 };
 
 export const INDEXJS_SEARCH_PATH_INFO: SearchPathInfo[] =
-  getClijsSearchPathsWithInfo();
+  getIndexJSSearchPathsWithInfo();
 export const INDEXJS_SEARCH_PATHS: string[] = INDEXJS_SEARCH_PATH_INFO.flatMap(
   info => info.expandedPaths
 );

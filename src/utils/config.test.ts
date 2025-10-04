@@ -114,7 +114,7 @@ describe('config.ts', () => {
         cliPath: '/fake/path/index.js',
       } as CopilotInstallationInfo;
 
-      await config.restoreClijsFromBackup(instInfo);
+      await config.restoreIndexJSFromBackup(instInfo);
 
       // Verify the backup was read
       expect(readFileSpy).toHaveBeenCalledWith(
