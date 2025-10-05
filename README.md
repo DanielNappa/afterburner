@@ -44,14 +44,6 @@ npm install -g tweakgc
 # Then run:
 tweakgc --apply
 ```
-
-## Features
-
-The patches are applied at the Abstract Syntax Tree level using structural
-pattern matching, making them identifier-agnostic and robust across different
-CLI versions. When you update GitHub Copilot CLI, simply rerun Tweak GC to
-reapply the patches.
-
 ## How It Works
 
 Tweak GC modifies the minified GitHub Copilot CLI bundle by parsing it into
