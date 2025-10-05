@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S node --enable-source-maps
 import { render } from 'ink';
 import { Command } from 'commander';
 import chalk from 'chalk';

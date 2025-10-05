@@ -57,7 +57,7 @@ reapply the patches.
 Afterburner modifies the minified GitHub Copilot CLI bundle by parsing it into
 an Abstract Syntax Tree, applying targeted patches to specific code structures,
 and regenerating the modified code. The patcher uses meriyah for parsing,
-uglify-js for beautification, and astring for code generation.
+and astring for code generation.
 
 ## Usage
 

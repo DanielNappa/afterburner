@@ -162,7 +162,7 @@ When testing the production patcher with `bun dev --debug --apply`, you'll see p
 
 ## AST Implementation Details
 
-The patcher uses **meriyah** for parsing, **uglify-js** for beautification, and **astring** for code generation.
+The patcher uses **meriyah** for parsing, and **astring** for code generation.
 
 ### Patch Implementation Patterns
 

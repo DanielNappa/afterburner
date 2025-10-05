@@ -10,7 +10,6 @@
 import { parseModule, parseScript } from 'meriyah';
 import { generate } from 'astring';
 import type { ESTree } from 'meriyah';
-import UglifyJS from 'uglify-js';
 import { isDebug } from '../misc.js';
 
 // Safe logging helper (avoid TS2584 in deno check)
@@ -971,29 +970,11 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
 // ============================================================================
 
 export function writeModelExtensions(content: string): string | null {
-  // 1. Beautify the input first using uglify-js API
-  let beautified: string;
-  try {
-    const res = UglifyJS.minify(content, {
-      compress: false,
-      mangle: false,
-      output: { beautify: true, annotations: true },
-    } as unknown as UglifyJS.MinifyOptions);
-    if (res.error) {
-      logError('patch: modelExtensions: UglifyJS error:', res.error);
-      return null;
-    }
-    beautified = res.code as string;
-  } catch (e) {
-    logError('patch: modelExtensions: Beautify failed:', e);
-    return null;
-  }
-
-  // 2. Parse with meriyah
+  // 1. Parse with meriyah
   let ast: ESTree.Program;
   let fxeFuncName: string | null = null;
   try {
-    ast = parseModule(beautified, { next: true }) as ESTree.Program;
+    ast = parseModule(content, { next: true }) as ESTree.Program;
     if (isDebug()) console.log('✅ Parsed input code');
     if (isDebug()) console.log(`   AST body length: ${ast.body.length}\n`);
   } catch (e) {
@@ -1001,7 +982,7 @@ export function writeModelExtensions(content: string): string | null {
     return null;
   }
 
-  // 3. Apply patches
+  // 2. Apply patches
   if (isDebug()) console.log('Applying Patch 1: C2 extension code...');
   if (applyC2ExtensionPatch(ast)) {
     if (isDebug()) console.log('✅ C2 extension patch applied\n');

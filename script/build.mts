@@ -115,7 +115,7 @@ if (process.versions.bun) {
       loader: { ".node": "file" },
       // Do not bundle the contents of package.json at build time: always read it
       // at runtime.
-      external: [packagePath, "vscode", "node:child_process", "uglify-js"],
+      external: [packagePath, "vscode", "node:child_process"],
       format: "esm",
       target: "bun",
       tsconfig: tsConfig,
@@ -130,7 +130,7 @@ if (process.versions.bun) {
     // Replace the shebang line
     const updated: string = contents.replace(
       /^#!.*\n/,
-      "#!/usr/bin/env node\n", // using node for now for compatibility
+      "#!/usr/bin/env -S node --enable-source-maps\n", // using node for now for compatibility
     );
 
     // Write back the modified file
@@ -153,7 +153,7 @@ if (process.versions.bun) {
       loader: { ".node": "file" },
       // Do not bundle the contents of package.json at build time: always read it
       // at runtime.
-      external: [packagePath, "vscode", "node:child_process", "uglify-js"],
+      external: [packagePath, "vscode", "node:child_process"],
       bundle: true,
       format: "esm",
       platform: "node",
