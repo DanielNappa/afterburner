@@ -6,7 +6,6 @@ import * as fs from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
-const runtime: string = navigator.userAgent;
 
 type Plugin<T extends string> = T extends "Bun" ? import("bun").BunPlugin
   : import("esbuild").Plugin;
@@ -103,7 +102,7 @@ function postBuild(): void {
   }
 }
 
-if (runtime.startsWith("Bun")) {
+if (process.versions.bun) {
   const { build } = await import("bun");
   const ignoreReactDevToolsPlugin: Plugin<"Bun"> = createIgnorePlugin<"Bun">({
     name: "ignore-react-devtools",
