@@ -97,11 +97,11 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
         <Text color="yellow">
           ⭐ <Text bold>Star the repo at </Text>
           <Link
-            url="https://github.com/DanielNappa/afterburner"
+            url="https://github.com/DanielNappa/afterburner-cli"
             fallback={false}
           >
             <Text bold color="cyan">
-              https://github.com/DanielNappa/afterburner
+              https://github.com/DanielNappa/afterburner-cli
             </Text>
           </Link>
           <Text bold> if you find this useful!</Text> ⭐

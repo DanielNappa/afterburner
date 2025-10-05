@@ -27,19 +27,19 @@ Run Afterburner without installation using npx, bunx, or your preferred package
 runner:
 
 ```bash
-npx afterburner-cli --apply
+npx @afterburner/cli --apply
 
 # Or with bun:
-bunx afterburner-cli --apply
+bunx @afterburner/cli --apply
 
 # Or with pnpm:
-pnpm dlx afterburner-cli --apply
+pnpm dlx @afterburner/cli --apply
 ```
 
 To install globally:
 
 ```bash
-npm install -g afterburner-cli
+npm install -g @afterburner/cli
 
 # Then run:
 afterburner --apply
@@ -100,7 +100,7 @@ requests are welcome for fixes.
 Clone and build from source:
 
 ```bash
-git clone https://github.com/DanielNappa/afterburner.git
+git clone https://github.com/DanielNappa/afterburner-cli.git
 cd afterburner
 npm install
 npm run build
