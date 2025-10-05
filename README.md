@@ -142,4 +142,4 @@ overwritten. Simply rerun Afterburner to reapply them, although it is not guaran
 
 ## License
 
-This project is licensed under the MIT.
+This project is licensed under the [MIT License](LICENSE).
