@@ -13,7 +13,7 @@ import {
   MainMenuItem,
   Settings,
   StartupCheckInfo,
-  AfterburnerConfig,
+  TweakGCConfig,
 } from './utils/types.js';
 import {
   readConfigFile,
@@ -35,7 +35,7 @@ export default function App({
 }: {
   startupCheckInfo: StartupCheckInfo;
 }) {
-  const [config, setConfig] = useState<AfterburnerConfig>({
+  const [config, setConfig] = useState<TweakGCConfig>({
     settings: DEFAULT_SETTINGS,
     changesApplied: false,
     ccVersion: '',

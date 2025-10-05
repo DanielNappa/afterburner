@@ -89,7 +89,7 @@ function postBuild(): void {
       type: rootPackage.type,
       main: "bin/index.js",
       bin: {
-        "afterburner": "bin/index.js",
+        "tweakgc": "bin/index.js",
       },
       files: rootPackage.files,
       repository: rootPackage.repository,

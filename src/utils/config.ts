@@ -9,7 +9,7 @@ import {
   DEFAULT_SETTINGS,
   StartupCheckInfo,
   ThinkingVerbsConfig,
-  AfterburnerConfig,
+  TweakGCConfig,
 } from './types.js';
 import {
   hashFileInChunks,
@@ -21,7 +21,7 @@ export const ensureConfigDir = async (): Promise<void> => {
   await fs.mkdir(CONFIG_DIR, { recursive: true });
 };
 
-let lastConfig: AfterburnerConfig = {
+let lastConfig: TweakGCConfig = {
   settings: DEFAULT_SETTINGS,
   changesApplied: false,
   ccVersion: '',
@@ -32,8 +32,8 @@ let lastConfig: AfterburnerConfig = {
 /**
  * Loads the contents of the config file, or default values if it doesn't exist yet.
  */
-export const readConfigFile = async (): Promise<AfterburnerConfig> => {
-  const config: AfterburnerConfig = {
+export const readConfigFile = async (): Promise<TweakGCConfig> => {
+  const config: TweakGCConfig = {
     ccVersion: '',
     installationDir: null,
     lastModified: new Date().toISOString(),
@@ -46,7 +46,7 @@ export const readConfigFile = async (): Promise<AfterburnerConfig> => {
     }
 
     const content = await fs.readFile(CONFIG_FILE, 'utf8');
-    const readConfig: AfterburnerConfig = { ...config, ...JSON.parse(content) };
+    const readConfig: TweakGCConfig = { ...config, ...JSON.parse(content) };
 
     // In v1.1.0 thinkingVerbs.punctuation was renamed to thinkingVerbs.format.  This should catch
     // old configs.
@@ -99,8 +99,8 @@ export const readConfigFile = async (): Promise<AfterburnerConfig> => {
  * Updates the config file with the changes made by the `updateFn` callback.
  */
 export const updateConfigFile = async (
-  updateFn: (config: AfterburnerConfig) => void
-): Promise<AfterburnerConfig> => {
+  updateFn: (config: TweakGCConfig) => void
+): Promise<TweakGCConfig> => {
   if (isDebug()) {
     console.log(`Updating config at ${CONFIG_FILE}`);
   }
@@ -113,7 +113,7 @@ export const updateConfigFile = async (
 /**
  * Internal function to write contents to the config file.
  */
-const saveConfig = async (config: AfterburnerConfig): Promise<void> => {
+const saveConfig = async (config: TweakGCConfig): Promise<void> => {
   try {
     config.lastModified = new Date().toISOString();
     await ensureConfigDir();
@@ -156,7 +156,7 @@ export const restoreIndexJSFromBackup = async (
  * Searches for the GitHub Copilot CLI installation in the default locations.
  */
 export const findCopilotInstallation = async (
-  config: AfterburnerConfig
+  config: TweakGCConfig
 ): Promise<CopilotInstallationInfo | null> => {
   if (config.installationDir) {
     INDEXJS_SEARCH_PATHS.unshift(config.installationDir);

@@ -1,7 +1,7 @@
 // import figlet from 'figlet';
 import * as fs from 'node:fs/promises';
 import { restoreIndexJSFromBackup, updateConfigFile } from '../config.js';
-import { CopilotInstallationInfo, AfterburnerConfig } from '../types.js';
+import { CopilotInstallationInfo, TweakGCConfig } from '../types.js';
 import { isDebug, replaceFileBreakingHardLinks } from '../misc.js';
 
 // Notes to patch-writers:
@@ -113,9 +113,9 @@ export const findChalkVar = (fileContents: string): string | undefined => {
 };
 
 export const applyCustomization = async (
-  config: AfterburnerConfig,
+  config: TweakGCConfig,
   instInfo: CopilotInstallationInfo
-): Promise<AfterburnerConfig> => {
+): Promise<TweakGCConfig> => {
   // Clean up any existing customizations, which will likely break the heuristics, by restoring the
   // original file from the backup.
   await restoreIndexJSFromBackup(instInfo);

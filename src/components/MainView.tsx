@@ -50,7 +50,7 @@ const systemMenuItems: SelectItem[] = [
   },
   {
     name: MainMenuItem.OPEN_CONFIG,
-    desc: `Opens your afterburner config file (${CONFIG_FILE})`,
+    desc: `Opens your tweakgc config file (${CONFIG_FILE})`,
   },
   {
     name: MainMenuItem.OPEN_CLI,
@@ -84,7 +84,7 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Header>Afterburner</Header>
+        <Header>TweakGC</Header>
       </Box>
       <Box marginBottom={1}>
         <Text color="gray">
@@ -97,11 +97,11 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
         <Text color="yellow">
           ⭐ <Text bold>Star the repo at </Text>
           <Link
-            url="https://github.com/DanielNappa/afterburner-cli"
+            url="https://github.com/DanielNappa/tweakgc-cli"
             fallback={false}
           >
             <Text bold color="cyan">
-              https://github.com/DanielNappa/afterburner-cli
+              https://github.com/DanielNappa/tweakgc-cli
             </Text>
           </Link>
           <Text bold> if you find this useful!</Text> ⭐

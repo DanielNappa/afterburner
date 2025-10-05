@@ -64,7 +64,7 @@ export function ThemePreview({ theme }: ThemePreviewProps) {
           <Text>
             <Text color={theme.colors.claude}>│ </Text>
             <Text color={theme.colors.claude}>✻</Text>
-            <Text> Welcome to Afterburner!</Text>
+            <Text> Welcome to TweakGC!</Text>
             <Text color={theme.colors.claude}>{'             '}│</Text>
           </Text>
           <Text>

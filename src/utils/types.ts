@@ -84,7 +84,7 @@ export interface Settings {
   inputBox: InputBoxConfig;
 }
 
-export interface AfterburnerConfig {
+export interface TweakGCConfig {
   ccVersion: string;
   installationDir: string | null;
   lastModified: string;
@@ -113,8 +113,8 @@ export enum MainMenuItem {
   // USER_MESSAGE_DISPLAY = 'User message display',
   // INPUT_BOX = 'Input box',
   APPLY_CHANGES = '*Apply patches to index.js',
-  RESTORE_ORIGINAL = 'Restore original GitHub Copilot CLI (preserves afterburner.json)',
-  OPEN_CONFIG = 'Open afterburner.json',
+  RESTORE_ORIGINAL = 'Restore original GitHub Copilot CLI (preserves tweakgc.json)',
+  OPEN_CONFIG = 'Open tweakgc.json',
   OPEN_CLI = "Open GitHub Copilot CLI's index.js",
   EXIT = 'Exit',
 }
@@ -633,7 +633,7 @@ export const DEFAULT_SETTINGS: Settings = {
   },
 };
 
-export const CONFIG_DIR = path.join(os.homedir(), '.afterburner');
+export const CONFIG_DIR = path.join(os.homedir(), '.tweakgc');
 export const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json');
 export const CLIJS_BACKUP_FILE = path.join(CONFIG_DIR, 'index.js.backup');
 

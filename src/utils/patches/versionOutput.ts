@@ -39,11 +39,11 @@ export const findVersionOutputLocation = (
 };
 
 /**
- * Modifies the version output to include afterburner version
+ * Modifies the version output to include tweakgc version
  */
 export const writeVersionOutput = (
   fileContents: string,
-  afterburnerVersion: string
+  tweakGCVersion: string
 ): string | null => {
   const locations = findVersionOutputLocation(fileContents);
   if (!locations) {
@@ -55,7 +55,7 @@ export const writeVersionOutput = (
     versionLocation.startIndex,
     versionLocation.endIndex
   );
-  const newText = `${originalVersionText}\\n${afterburnerVersion} (afterburner)`;
+  const newText = `${originalVersionText}\\n${tweakGCVersion} (tweakgc)`;
 
   const newFileContents1 =
     fileContents.slice(0, versionLocation.startIndex) +
@@ -76,7 +76,7 @@ export const writeVersionOutput = (
     console.error('patch: versionOutput: failed to find chalk variable');
     return null;
   }
-  const newStatusInfo = `,${r1}.createElement(${r2},null,${r1}.createElement(${r3},{dimColor:!0}," L "),${r1}.createElement(${r3},null,${chalkVar}.rgb(235, 109, 13).bold("afterburner: v${afterburnerVersion}")))`;
+  const newStatusInfo = `,${r1}.createElement(${r2},null,${r1}.createElement(${r3},{dimColor:!0}," L "),${r1}.createElement(${r3},null,${chalkVar}.rgb(235, 109, 13).bold("tweakgc: v${tweakGCVersion}")))`;
   const newFileContents2 =
     fileContents.slice(0, sessionIdLocation.startIndex) +
     newStatusInfo +

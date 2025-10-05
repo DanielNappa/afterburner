@@ -1,5 +1,5 @@
 /**
- * Model Extensions Patcher for Afterburner
+ * Model Extensions Patcher for Tweak GC
  *
  * Pure AST-level patching for GitHub Copilot CLI model extensions.
  * Requires beautified input (not minified single-line code).

@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "afterburner-cli",
+      "name": "tweakgc",
       "dependencies": {
         "@types/figlet": "^1.7.0",
         "astring": "^1.9.0",

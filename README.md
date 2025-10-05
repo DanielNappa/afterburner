@@ -1,4 +1,4 @@
-# Afterburner CLI
+# Tweak GC CLI
 
 ## Disclaimer
 
@@ -15,7 +15,7 @@ community.
 
 ## Overview
 
-Afterburner is a command-line tool that extends the GitHub Copilot CLI to allow
+Tweak GC is a command-line tool that extends the GitHub Copilot CLI to allow
 selection of all available models returned from the Copilot API (except for
 OpenAI o4-mini and GPT-5 Codex). It works by applying AST-level patches to the
 Copilot CLI installation, enabling dynamic model loading from environment
@@ -23,38 +23,38 @@ variables, configuration files, and server responses.
 
 ## Quickstart
 
-Run Afterburner without installation using npx, bunx, or your preferred package
+Run Tweak GC without installation using npx, bunx, or your preferred package
 runner:
 
 ```bash
-npx afterburner-cli --apply
+npx tweakgc --apply
 
 # Or with bun:
-bunx afterburner-cli --apply
+bunx tweakgc --apply
 
 # Or with pnpm:
-pnpm dlx afterburner-cli --apply
+pnpm dlx tweakgc --apply
 ```
 
 To install globally:
 
 ```bash
-npm install -g afterburner-cli
+npm install -g tweakgc
 
 # Then run:
-afterburner --apply
+tweakgc --apply
 ```
 
 ## Features
 
 The patches are applied at the Abstract Syntax Tree level using structural
 pattern matching, making them identifier-agnostic and robust across different
-CLI versions. When you update GitHub Copilot CLI, simply rerun Afterburner to
+CLI versions. When you update GitHub Copilot CLI, simply rerun Tweak GC to
 reapply the patches.
 
 ## How It Works
 
-Afterburner modifies the minified GitHub Copilot CLI bundle by parsing it into
+Tweak GC modifies the minified GitHub Copilot CLI bundle by parsing it into
 an Abstract Syntax Tree, applying targeted patches to specific code structures,
 and regenerating the modified code. The patcher uses meriyah for parsing,
 and astring for code generation.
@@ -64,13 +64,13 @@ and astring for code generation.
 Basic usage to apply patches to your GitHub Copilot CLI installation:
 
 ```bash
-afterburner --apply
+tweakgc --apply
 ```
 
 Debug mode with verbose output:
 
 ```bash
-afterburner --debug --apply
+tweakgc --debug --apply
 ```
 
 After patching, add custom models via environment variable:
@@ -90,7 +90,7 @@ Or add models to your config file at `~/.copilot/config.json`:
 
 ## Verified Compatibility
 
-Afterburner is tested and verified to work with GitHub Copilot CLI versions
+Tweak GC is tested and verified to work with GitHub Copilot CLI versions
 0.0.333 and 0.0.334. The structural pattern matching approach may not provide
 compatibility with other versions though, though testing is recommended and pull
 requests are welcome for fixes.
@@ -100,8 +100,8 @@ requests are welcome for fixes.
 Clone and build from source:
 
 ```bash
-git clone https://github.com/DanielNappa/afterburner-cli.git
-cd afterburner
+git clone https://github.com/DanielNappa/tweakgc-cli.git
+cd tweakgc
 npm install
 npm run build
 node dist/index.js --apply
@@ -138,7 +138,7 @@ logs. If your CLI installation is in a non-standard location, the patcher may
 fail to locate it.
 
 When updating GitHub Copilot CLI to a new version, your patches will be
-overwritten. Simply rerun Afterburner to reapply them, although it is not guaranteed to work for newer versions.
+overwritten. Simply rerun Tweak GC to reapply them, although it is not guaranteed to work for newer versions.
 
 ## License
 

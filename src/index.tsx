@@ -11,7 +11,7 @@ import { applyCustomization } from './utils/patches/index.js';
 const main = async () => {
   const program = new Command();
   program
-    .name('afterburner')
+    .name('tweakgc')
     .description(
       'Command-line tool to extend your GitHub CLI to accept more selectable models.'
     )
@@ -114,8 +114,8 @@ Searched at the following locations:
 ${formatSearchPaths()}
 
 If you have it installed but it's in a location not listed above, please open an issue at
-https://github.com/DanielNappa/afterburner-cli/issues and tell us where you have it--we'll add that location
-to our search list and release an update today!  And in the meantime, you can get afterburner working
+https://github.com/DanielNappa/tweakgc-cli/issues and tell us where you have it--we'll add that location
+to our search list and release an update today!  And in the meantime, you can get tweakgc working
 by manually specifying that location in ${CONFIG_FILE} with the "installationDir" property:
 
 {
