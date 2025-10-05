@@ -4,6 +4,7 @@ import { SelectInput, SelectItem } from './SelectInput.js';
 import { useContext, useState } from 'react';
 import { SettingsContext } from '../App.js';
 import { CONFIG_FILE, MainMenuItem } from '../utils/types.js';
+import { Banner } from './Banner.js';
 import Header from './Header.js';
 
 interface MainViewProps {
@@ -84,8 +85,9 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Header>TweakGC</Header>
+        <Header>Tweak GC</Header>
       </Box>
+      <Banner animated showLoading />
       <Box marginBottom={1}>
         <Text color="gray">
           <Text bold>Customize your GitHub Copilot CLI installation.</Text>{' '}
