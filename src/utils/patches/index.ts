@@ -1,4 +1,4 @@
-import figlet from 'figlet';
+// import figlet from 'figlet';
 import * as fs from 'node:fs/promises';
 import { restoreIndexJSFromBackup, updateConfigFile } from '../config.js';
 import { CopilotInstallationInfo, AfterburnerConfig } from '../types.js';
@@ -18,25 +18,25 @@ import { isDebug, replaceFileBreakingHardLinks } from '../misc.js';
 //   character such as ',' or ';' can speed up matching even further, e.g. down to 30ms.
 //
 
-import { writeShowMoreItemsInSelectMenus } from './showMoreItemsInSelectMenus.js';
-import { writeThemes } from './themes.js';
-import { writeContextLimit } from './contextLimit.js';
-import { writeInputBoxBorder } from './inputBorderBox.js';
-import { writeSigninBannerText } from './signinBannerText.js';
-import { writeSpinnerNoFreeze } from './spinnerNoFreeze.js';
-import { writeThinkerFormat } from './thinkerFormat.js';
-import { writeThinkerSymbolMirrorOption } from './thinkerMirrorOption.js';
-import { writeThinkerSymbolChars } from './thinkerSymbolChars.js';
-import { writeThinkerSymbolSpeed } from './thinkerSymbolSpeed.js';
-import { writeThinkerSymbolWidthLocation } from './thinkerSymbolWidth.js';
-import { writeThinkerVerbs } from './thinkerVerbs.js';
-import { writeUserMessageDisplay } from './userMessageDisplay.js';
-import { writeVerboseProperty } from './verboseProperty.js';
-import { writeWelcomeMessage } from './welcomeMessage.js';
+// import { writeShowMoreItemsInSelectMenus } from './showMoreItemsInSelectMenus.js';
+// import { writeThemes } from './themes.js';
+// import { writeContextLimit } from './contextLimit.js';
+// import { writeInputBoxBorder } from './inputBorderBox.js';
+// import { writeSigninBannerText } from './signinBannerText.js';
+// import { writeSpinnerNoFreeze } from './spinnerNoFreeze.js';
+// import { writeThinkerFormat } from './thinkerFormat.js';
+// import { writeThinkerSymbolMirrorOption } from './thinkerMirrorOption.js';
+// import { writeThinkerSymbolChars } from './thinkerSymbolChars.js';
+// import { writeThinkerSymbolSpeed } from './thinkerSymbolSpeed.js';
+// import { writeThinkerSymbolWidthLocation } from './thinkerSymbolWidth.js';
+// import { writeThinkerVerbs } from './thinkerVerbs.js';
+// import { writeUserMessageDisplay } from './userMessageDisplay.js';
+// import { writeVerboseProperty } from './verboseProperty.js';
+// import { writeWelcomeMessage } from './welcomeMessage.js';
 import { writeModelCustomizations } from './modelSelector.js';
 import { writeModelExtensions } from './modelExtensions.js';
-import { writeIgnoreMaxSubscription } from './ignoreMaxSubscription.js';
-import { writeVersionOutput } from './versionOutput.js';
+// import { writeIgnoreMaxSubscription } from './ignoreMaxSubscription.js';
+// import { writeVersionOutput } from './versionOutput.js';
 
 export interface LocationResult {
   startIndex: number;
@@ -124,121 +124,121 @@ export const applyCustomization = async (
 
   // Apply themes
   let result: string | null = null;
-  if (config.settings.themes && config.settings.themes.length > 0) {
-    if ((result = writeThemes(content, config.settings.themes)))
-      content = result;
-  }
+  // if (config.settings.themes && config.settings.themes.length > 0) {
+  //   if ((result = writeThemes(content, config.settings.themes)))
+  //     content = result;
+  // }
 
   // Apply launch text
-  if (config.settings.launchText) {
-    const c = config.settings.launchText;
-    let textToApply = '';
-    if (c.method === 'custom' && c.customText) {
-      textToApply = c.customText;
-    } else if (c.method === 'figlet' && c.figletText) {
-      textToApply = await new Promise<string>(resolve =>
-        figlet.text(
-          c.figletText.replace('\n', ' '),
-          c.figletFont as unknown as figlet.Fonts,
-          (err, data) => {
-            if (err) {
-              console.error('patch: figlet: failed to generate text', err);
-              resolve('');
-            } else {
-              resolve(data || '');
-            }
-          }
-        )
-      );
-    }
-    if ((result = writeSigninBannerText(content, textToApply)))
-      content = result;
+  // if (config.settings.launchText) {
+  //   const c = config.settings.launchText;
+  //   let textToApply = '';
+  //   if (c.method === 'custom' && c.customText) {
+  //     textToApply = c.customText;
+  //   } else if (c.method === 'figlet' && c.figletText) {
+  //     textToApply = await new Promise<string>(resolve =>
+  //       figlet.text(
+  //         c.figletText.replace('\n', ' '),
+  //         c.figletFont as unknown as figlet.Fonts,
+  //         (err, data) => {
+  //           if (err) {
+  //             console.error('patch: figlet: failed to generate text', err);
+  //             resolve('');
+  //           } else {
+  //             resolve(data || '');
+  //           }
+  //         }
+  //       )
+  //     );
+  //   }
+  //   if ((result = writeSigninBannerText(content, textToApply)))
+  //     content = result;
 
-    // Also apply customText to welcome message if it's defined
-    const welcomeMessage = c.method === 'custom' ? c.customText : c.figletText;
-    if (welcomeMessage) {
-      if ((result = writeWelcomeMessage(content, welcomeMessage)))
-        content = result;
-    }
-  }
+  //   // Also apply customText to welcome message if it's defined
+  //   const welcomeMessage = c.method === 'custom' ? c.customText : c.figletText;
+  //   if (welcomeMessage) {
+  //     if ((result = writeWelcomeMessage(content, welcomeMessage)))
+  //       content = result;
+  //   }
+  // }
 
   // Apply thinking verbs
   // prettier-ignore
-  if (config.settings.thinkingVerbs) {
-    if ((result = writeThinkerVerbs(content, config.settings.thinkingVerbs.verbs)))
-      content = result;
-    if ((result = writeThinkerFormat(content, config.settings.thinkingVerbs.format)))
-      content = result;
-  }
+  // if (config.settings.thinkingVerbs) {
+  //   if ((result = writeThinkerVerbs(content, config.settings.thinkingVerbs.verbs)))
+  //     content = result;
+  //   if ((result = writeThinkerFormat(content, config.settings.thinkingVerbs.format)))
+  //     content = result;
+  // }
 
   // Apply thinking style
   // prettier-ignore
-  if ((result = writeThinkerSymbolChars(content, config.settings.thinkingStyle.phases)))
-    content = result;
-  // prettier-ignore
-  if ((result = writeThinkerSymbolSpeed(content, config.settings.thinkingStyle.updateInterval)))
-    content = result;
-  // prettier-ignore
-  if ((result = writeThinkerSymbolWidthLocation(content, Math.max(...config.settings.thinkingStyle.phases.map(p => p.length)) + 1)))
-    content = result;
-  // prettier-ignore
-  if ((result = writeThinkerSymbolMirrorOption(content, config.settings.thinkingStyle.reverseMirror)))
-    content = result;
+  // if ((result = writeThinkerSymbolChars(content, config.settings.thinkingStyle.phases)))
+  //   content = result;
+  // // prettier-ignore
+  // if ((result = writeThinkerSymbolSpeed(content, config.settings.thinkingStyle.updateInterval)))
+  //   content = result;
+  // // prettier-ignore
+  // if ((result = writeThinkerSymbolWidthLocation(content, Math.max(...config.settings.thinkingStyle.phases.map(p => p.length)) + 1)))
+  //   content = result;
+  // // prettier-ignore
+  // if ((result = writeThinkerSymbolMirrorOption(content, config.settings.thinkingStyle.reverseMirror)))
+  //   content = result;
 
   // Apply user message display customization
-  if (config.settings.userMessageDisplay) {
-    if (
-      (result = writeUserMessageDisplay(
-        content,
-        config.settings.userMessageDisplay.prefix.format,
-        config.settings.userMessageDisplay.prefix.foreground_color,
-        config.settings.userMessageDisplay.prefix.background_color,
-        config.settings.userMessageDisplay.prefix.styling.includes('bold'),
-        config.settings.userMessageDisplay.prefix.styling.includes('italic'),
-        config.settings.userMessageDisplay.prefix.styling.includes('underline'),
-        config.settings.userMessageDisplay.prefix.styling.includes(
-          'strikethrough'
-        ),
-        config.settings.userMessageDisplay.prefix.styling.includes('inverse'),
-        config.settings.userMessageDisplay.message.foreground_color,
-        config.settings.userMessageDisplay.message.background_color,
-        config.settings.userMessageDisplay.message.styling.includes('bold'),
-        config.settings.userMessageDisplay.message.styling.includes('italic'),
-        config.settings.userMessageDisplay.message.styling.includes(
-          'underline'
-        ),
-        config.settings.userMessageDisplay.message.styling.includes(
-          'strikethrough'
-        ),
-        config.settings.userMessageDisplay.message.styling.includes('inverse')
-      ))
-    ) {
-      content = result;
-    }
-  }
+  // if (config.settings.userMessageDisplay) {
+  //   if (
+  //     (result = writeUserMessageDisplay(
+  //       content,
+  //       config.settings.userMessageDisplay.prefix.format,
+  //       config.settings.userMessageDisplay.prefix.foreground_color,
+  //       config.settings.userMessageDisplay.prefix.background_color,
+  //       config.settings.userMessageDisplay.prefix.styling.includes('bold'),
+  //       config.settings.userMessageDisplay.prefix.styling.includes('italic'),
+  //       config.settings.userMessageDisplay.prefix.styling.includes('underline'),
+  //       config.settings.userMessageDisplay.prefix.styling.includes(
+  //         'strikethrough'
+  //       ),
+  //       config.settings.userMessageDisplay.prefix.styling.includes('inverse'),
+  //       config.settings.userMessageDisplay.message.foreground_color,
+  //       config.settings.userMessageDisplay.message.background_color,
+  //       config.settings.userMessageDisplay.message.styling.includes('bold'),
+  //       config.settings.userMessageDisplay.message.styling.includes('italic'),
+  //       config.settings.userMessageDisplay.message.styling.includes(
+  //         'underline'
+  //       ),
+  //       config.settings.userMessageDisplay.message.styling.includes(
+  //         'strikethrough'
+  //       ),
+  //       config.settings.userMessageDisplay.message.styling.includes('inverse')
+  //     ))
+  //   ) {
+  //     content = result;
+  //   }
+  // }
 
   // Apply input box border customization
-  if (
-    config.settings.inputBox &&
-    typeof config.settings.inputBox.removeBorder === 'boolean'
-  ) {
-    if (
-      (result = writeInputBoxBorder(
-        content,
-        config.settings.inputBox.removeBorder
-      ))
-    )
-      content = result;
-  }
+  // if (
+  //   config.settings.inputBox &&
+  //   typeof config.settings.inputBox.removeBorder === 'boolean'
+  // ) {
+  //   if (
+  //     (result = writeInputBoxBorder(
+  //       content,
+  //       config.settings.inputBox.removeBorder
+  //     ))
+  //   )
+  //     content = result;
+  // }
 
   // Apply verbose property patch (always true by default)
-  if ((result = writeVerboseProperty(content))) content = result;
+  // if ((result = writeVerboseProperty(content))) content = result;
 
-  // Apply spinner no-freeze patch (always enabled)
-  if ((result = writeSpinnerNoFreeze(content))) content = result;
+  // // Apply spinner no-freeze patch (always enabled)
+  // if ((result = writeSpinnerNoFreeze(content))) content = result;
 
-  // Apply context limit patch (always enabled)
-  if ((result = writeContextLimit(content))) content = result;
+  // // Apply context limit patch (always enabled)
+  // if ((result = writeContextLimit(content))) content = result;
 
   // Apply model customizations (known names, mapping, selector options) (always enabled)
   if ((result = writeModelCustomizations(content))) content = result;
@@ -249,14 +249,14 @@ export const applyCustomization = async (
     if (r) content = r;
   }
 
-  // Apply show more items in select menus patch (always enabled)
-  if ((result = writeShowMoreItemsInSelectMenus(content, 25))) content = result;
+  // // Apply show more items in select menus patch (always enabled)
+  // if ((result = writeShowMoreItemsInSelectMenus(content, 25))) content = result;
 
-  // Disable Max subscription gating for cost tool (always enabled)
-  if ((result = writeIgnoreMaxSubscription(content))) content = result;
+  // // Disable Max subscription gating for cost tool (always enabled)
+  // if ((result = writeIgnoreMaxSubscription(content))) content = result;
 
-  // Apply version output modification (always enabled)
-  if ((result = writeVersionOutput(content, '1.5.5'))) content = result;
+  // // Apply version output modification (always enabled)
+  // if ((result = writeVersionOutput(content, '1.5.5'))) content = result;
 
   // Replace the file, breaking hard links and preserving permissions
   await replaceFileBreakingHardLinks(instInfo.cliPath, content, 'patch');

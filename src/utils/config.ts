@@ -153,7 +153,7 @@ export const restoreIndexJSFromBackup = async (
 };
 
 /**
- * Searches for the Github Copilot CLI installation in the default locations.
+ * Searches for the GitHub Copilot CLI installation in the default locations.
  */
 export const findCopilotInstallation = async (
   config: AfterburnerConfig
@@ -166,7 +166,7 @@ export const findCopilotInstallation = async (
     try {
       if (isDebug()) {
         console.log(
-          `Searching for Github Copilot CLI index.js file at ${searchPath}`
+          `Searching for GitHub Copilot CLI index.js file at ${searchPath}`
         );
       }
 
@@ -177,7 +177,7 @@ export const findCopilotInstallation = async (
       }
       if (isDebug()) {
         console.log(
-          `Found Github Copilot CLI index.js file at ${searchPath}; checking hash...`
+          `Found GitHub Copilot CLI index.js file at ${searchPath}; checking hash...`
         );
         console.log(`SHA256 hash: ${await hashFileInChunks(cliPath)}`);
       }
@@ -246,7 +246,7 @@ async function doesFileExist(filePath: string): Promise<boolean> {
 }
 
 /**
- * Performs startup checking: finding Github Copilot CLI, creating a backup if necessary, checking if
+ * Performs startup checking: finding GitHub Copilot CLI, creating a backup if necessary, checking if
  * it's been updated.  If true, an update is required.
  */
 export async function startupCheck(): Promise<StartupCheckInfo | null> {

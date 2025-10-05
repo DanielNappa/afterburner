@@ -41,7 +41,7 @@ export function InputBoxView({ onSubmit }: InputBoxViewProps) {
       <Box marginBottom={1}>
         <Text color="gray">
           <Text bold>
-            Customize the appearance of the Github Copilot CLI input box.
+            Customize the appearance of the GitHub Copilot CLI input box.
           </Text>{' '}
           <Text dimColor>
             Press space to toggle settings, enter to go back.

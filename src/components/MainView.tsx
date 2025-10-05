@@ -15,38 +15,38 @@ interface MainViewProps {
 }
 
 // prettier-ignore
-const baseMenuItems: SelectItem[] = [
-  {
-    name: MainMenuItem.THEMES,
-    desc: "Modify Github Copilot CLI's built-in themes or create your own",
-  },
-  {
-    name: MainMenuItem.LAUNCH_TEXT,
-    desc: 'Change the "Github Copilot CLI" banner text that\'s shown when you sign in to Github Copilot CLI',
-  },
-  {
-    name: MainMenuItem.THINKING_VERBS,
-    desc: "Customize the list of verbs that Github Copilot CLI uses when it's working",
-  },
-  {
-    name: MainMenuItem.THINKING_STYLE,
-    desc: 'Choose custom spinners',
-  },
-  {
-    name: MainMenuItem.USER_MESSAGE_DISPLAY,
-    desc: 'Customize how user messages are displayed',
-  },
-  {
-    name: MainMenuItem.INPUT_BOX,
-    desc: 'Customize the input box appearance (e.g., remove border)',
-  },
-];
+// const baseMenuItems: SelectItem[] = [
+//   {
+//     name: MainMenuItem.THEMES,
+//     desc: "Modify GitHub Copilot CLI's built-in themes or create your own",
+//   },
+//   {
+//     name: MainMenuItem.LAUNCH_TEXT,
+//     desc: 'Change the "GitHub Copilot CLI" banner text that\'s shown when you sign in to GitHub Copilot CLI',
+//   },
+//   {
+//     name: MainMenuItem.THINKING_VERBS,
+//     desc: "Customize the list of verbs that GitHub Copilot CLI uses when it's working",
+//   },
+//   {
+//     name: MainMenuItem.THINKING_STYLE,
+//     desc: 'Choose custom spinners',
+//   },
+//   {
+//     name: MainMenuItem.USER_MESSAGE_DISPLAY,
+//     desc: 'Customize how user messages are displayed',
+//   },
+//   {
+//     name: MainMenuItem.INPUT_BOX,
+//     desc: 'Customize the input box appearance (e.g., remove border)',
+//   },
+// ];
 
 // prettier-ignore
 const systemMenuItems: SelectItem[] = [
   {
     name: MainMenuItem.RESTORE_ORIGINAL,
-    desc: 'Reverts your Github Copilot CLI install to its original state (your customizations are remembered and can be reapplied)',
+    desc: 'Reverts your GitHub Copilot CLI install to its original state (your customizations are remembered and can be reapplied)',
   },
   {
     name: MainMenuItem.OPEN_CONFIG,
@@ -54,7 +54,7 @@ const systemMenuItems: SelectItem[] = [
   },
   {
     name: MainMenuItem.OPEN_CLI,
-    desc: "Opens Github Copilot CLI's index.js file",
+    desc: "Opens GitHub Copilot CLI's index.js file",
   },
   {
     name: MainMenuItem.EXIT,
@@ -69,13 +69,13 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
       : [
           {
             name: MainMenuItem.APPLY_CHANGES,
-            desc: "Required: Updates Github Copilot CLI's index.js in-place with your changes",
+            desc: "Required: Updates GitHub Copilot CLI's index.js in-place with your changes",
             selectedStyles: {
-              color: 'green',
+              color: '#FFA500',
             },
           },
         ]),
-    ...baseMenuItems,
+    // ...baseMenuItems,
     ...systemMenuItems,
   ];
 
@@ -88,7 +88,7 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
       </Box>
       <Box marginBottom={1}>
         <Text color="gray">
-          <Text bold>Customize your Github Copilot CLI installation.</Text>{' '}
+          <Text bold>Customize your GitHub Copilot CLI installation.</Text>{' '}
           <Text dimColor>Settings will be saved to a JSON file.</Text>
         </Text>
       </Box>
@@ -105,6 +105,17 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
             </Text>
           </Link>
           <Text bold> if you find this useful!</Text> ⭐
+        </Text>
+      </Box>
+
+      <Box marginBottom={1}>
+        <Text color="red">
+          ⚠️{' '}
+          <Text bold>
+            This patcher has only been tested for versions 0.0.333 and 0.0.334
+            of the GitHub Copilot CLI{' '}
+          </Text>
+          <Text bold>it will break eventually for newer versions!</Text> ⚠️
         </Text>
       </Box>
 

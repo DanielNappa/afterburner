@@ -106,16 +106,16 @@ export interface StartupCheckInfo {
 }
 
 export enum MainMenuItem {
-  THEMES = 'Themes',
-  LAUNCH_TEXT = 'Launch text',
-  THINKING_VERBS = 'Thinking verbs',
-  THINKING_STYLE = 'Thinking style',
-  USER_MESSAGE_DISPLAY = 'User message display',
-  INPUT_BOX = 'Input box',
+  // // THEMES = 'Themes',
+  // LAUNCH_TEXT = 'Launch text',
+  // THINKING_VERBS = 'Thinking verbs',
+  // THINKING_STYLE = 'Thinking style',
+  // USER_MESSAGE_DISPLAY = 'User message display',
+  // INPUT_BOX = 'Input box',
   APPLY_CHANGES = '*Apply patches to index.js',
-  RESTORE_ORIGINAL = 'Restore original Github Copilot CLI (preserves afterburner.json)',
+  RESTORE_ORIGINAL = 'Restore original GitHub Copilot CLI (preserves afterburner.json)',
   OPEN_CONFIG = 'Open afterburner.json',
-  OPEN_CLI = "Open Github Copilot CLI's index.js",
+  OPEN_CLI = "Open GitHub Copilot CLI's index.js",
   EXIT = 'Exit',
 }
 
@@ -352,7 +352,7 @@ export const DEFAULT_SETTINGS: Settings = {
   ],
   launchText: {
     method: 'figlet',
-    figletText: 'Github Copilot CLI',
+    figletText: 'GitHub Copilot CLI',
     figletFont: 'ANSI Shadow',
     customText: '',
   },
@@ -662,7 +662,7 @@ const getIndexJSSearchPathsWithInfo = (): SearchPathInfo[] => {
     }
   };
 
-  // Local Github Copilot CLI installation (#42)
+  // Local GitHub Copilot CLI installation (#42)
   addPath(`${os.homedir()}/.claude/local/${mod}`);
 
   // Search in custom paths for popular tools.  These are cross-platform paths.

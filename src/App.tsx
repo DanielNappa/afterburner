@@ -1,12 +1,12 @@
 import { useState, useEffect, createContext, useCallback } from 'react';
 import { Box, useInput } from 'ink';
 import { MainView } from './components/MainView.js';
-import { ThemesView } from './components/ThemesView.js';
-import { LaunchTextView } from './components/LaunchTextView.js';
-import { ThinkingVerbsView } from './components/ThinkingVerbsView.js';
-import { ThinkingStyleView } from './components/ThinkingStyleView.js';
-import { UserMessageDisplayView } from './components/UserMessageDisplayView.js';
-import { InputBoxView } from './components/InputBoxView.js';
+// import { ThemesView } from './components/ThemesView.js';
+// import { LaunchTextView } from './components/LaunchTextView.js';
+// import { ThinkingVerbsView } from './components/ThinkingVerbsView.js';
+// import { ThinkingStyleView } from './components/ThinkingStyleView.js';
+// import { UserMessageDisplayView } from './components/UserMessageDisplayView.js';
+// import { InputBoxView } from './components/InputBoxView.js';
 import {
   CONFIG_FILE,
   DEFAULT_SETTINGS,
@@ -76,6 +76,7 @@ export default function App({
     [config.settings]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentView, setCurrentView] = useState<MainMenuItem | null>(null);
   const [notification, setNotification] = useState<{
     message: string;
@@ -86,7 +87,7 @@ export default function App({
   useEffect(() => {
     if (startupCheckInfo.wasUpdated && startupCheckInfo.oldVersion) {
       setNotification({
-        message: `Your Github Copilot CLI installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
+        message: `Your GitHub Copilot CLI installation was updated from ${startupCheckInfo.oldVersion} to ${startupCheckInfo.newVersion}, and the patching was likely overwritten
 (However, your customization are still remembered in ${CONFIG_FILE}.)
 Please reapply your changes below.`,
         type: 'warning',
@@ -109,14 +110,14 @@ Please reapply your changes below.`,
   const handleMainSubmit = (item: MainMenuItem) => {
     setNotification(null);
     switch (item) {
-      case MainMenuItem.THEMES:
-      case MainMenuItem.LAUNCH_TEXT:
-      case MainMenuItem.THINKING_VERBS:
-      case MainMenuItem.THINKING_STYLE:
-      case MainMenuItem.USER_MESSAGE_DISPLAY:
-      case MainMenuItem.INPUT_BOX:
-        setCurrentView(item);
-        break;
+      // case MainMenuItem.THEMES:
+      // case MainMenuItem.LAUNCH_TEXT:
+      // case MainMenuItem.THINKING_VERBS:
+      // case MainMenuItem.THINKING_STYLE:
+      // case MainMenuItem.USER_MESSAGE_DISPLAY:
+      // case MainMenuItem.INPUT_BOX:
+      //   setCurrentView(item);
+      //   break;
       case MainMenuItem.APPLY_CHANGES:
         if (startupCheckInfo.instInfo) {
           setNotification({
@@ -138,7 +139,7 @@ Please reapply your changes below.`,
         if (startupCheckInfo.instInfo) {
           restoreIndexJSFromBackup(startupCheckInfo.instInfo).then(() => {
             setNotification({
-              message: 'Original Github Copilot CLI restored successfully!',
+              message: 'Original GitHub Copilot CLI restored successfully!',
               type: 'success',
             });
             updateSettings(() => {});
@@ -158,9 +159,9 @@ Please reapply your changes below.`,
     }
   };
 
-  const handleBack = () => {
-    setCurrentView(null);
-  };
+  // const handleBack = () => {
+  //   setCurrentView(null);
+  // };
 
   return (
     <SettingsContext.Provider
@@ -171,21 +172,23 @@ Please reapply your changes below.`,
       }}
     >
       <Box flexDirection="column">
-        {currentView === null ? (
-          <MainView onSubmit={handleMainSubmit} notification={notification} />
-        ) : currentView === MainMenuItem.THEMES ? (
-          <ThemesView onBack={handleBack} />
-        ) : currentView === MainMenuItem.LAUNCH_TEXT ? (
-          <LaunchTextView onBack={handleBack} />
-        ) : currentView === MainMenuItem.THINKING_VERBS ? (
-          <ThinkingVerbsView onBack={handleBack} />
-        ) : currentView === MainMenuItem.THINKING_STYLE ? (
-          <ThinkingStyleView onBack={handleBack} />
-        ) : currentView === MainMenuItem.USER_MESSAGE_DISPLAY ? (
-          <UserMessageDisplayView onBack={handleBack} />
-        ) : currentView === MainMenuItem.INPUT_BOX ? (
-          <InputBoxView onSubmit={handleBack} />
-        ) : null}
+        {
+          currentView === null && (
+            <MainView onSubmit={handleMainSubmit} notification={notification} />
+          ) // : currentView === MainMenuItem.THEMES ? (
+          //   <ThemesView onBack={handleBack} />
+          // ) : currentView === MainMenuItem.LAUNCH_TEXT ? (
+          //   <LaunchTextView onBack={handleBack} />
+          // ) : currentView === MainMenuItem.THINKING_VERBS ? (
+          //   <ThinkingVerbsView onBack={handleBack} />
+          // ) : currentView === MainMenuItem.THINKING_STYLE ? (
+          //   <ThinkingStyleView onBack={handleBack} />
+          // ) : currentView === MainMenuItem.USER_MESSAGE_DISPLAY ? (
+          //   <UserMessageDisplayView onBack={handleBack} />
+          // ) : currentView === MainMenuItem.INPUT_BOX ? (
+          //   <InputBoxView onSubmit={handleBack} />
+          // ) : null}
+        }
       </Box>
     </SettingsContext.Provider>
   );

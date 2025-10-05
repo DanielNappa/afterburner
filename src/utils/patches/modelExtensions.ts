@@ -11,6 +11,7 @@ import { parseModule, parseScript } from 'meriyah';
 import { generate } from 'astring';
 import type { ESTree } from 'meriyah';
 import UglifyJS from 'uglify-js';
+import { isDebug } from '../misc.js';
 
 // Safe logging helper (avoid TS2584 in deno check)
 function logError(...args: unknown[]): void {
@@ -117,7 +118,8 @@ function findC2Reference(ast: ESTree.Program): C2Reference | null {
     return null;
   }
 
-  console.log(`✅ Found C2 array: ${c2VarName} at index ${c2VarIndex}`);
+  if (isDebug())
+    console.log(`✅ Found C2 array: ${c2VarName} at index ${c2VarIndex}`);
   return { c2VarName, c2VarIndex };
 }
 
@@ -210,7 +212,10 @@ function applyFxeFunctionPatch(ast: ESTree.Program): boolean {
     return false;
   }
 
-  console.log(`✅ Found Fxe function: ${fxeFuncName} at index ${fxeFuncIndex}`);
+  if (isDebug())
+    console.log(
+      `✅ Found Fxe function: ${fxeFuncName} at index ${fxeFuncIndex}`
+    );
 
   const newFunctionCode = `
 function ${fxeFuncName}(t, e) {
@@ -281,7 +286,10 @@ function findRWeReference(
     return null;
   }
 
-  console.log(`✅ Found RWe function: ${rweFuncName} at index ${rweFuncIndex}`);
+  if (isDebug())
+    console.log(
+      `✅ Found RWe function: ${rweFuncName} at index ${rweFuncIndex}`
+    );
   return { rweFuncName, rweFuncIndex };
 }
 
@@ -386,7 +394,7 @@ function findQlReference(ast: ESTree.Program): string | null {
     return null;
   }
 
-  console.log(`✅ Found Ql: ${qlName}`);
+  if (isDebug()) console.log(`✅ Found Ql: ${qlName}`);
   return qlName;
 }
 
@@ -425,7 +433,7 @@ function applySchemaChangesPatch(
         innerCall.callee.name = qlName;
         innerCall.arguments = [];
         patchCount++;
-        console.log(`  Found schema change #${patchCount}`);
+        if (isDebug()) console.log(`  Found schema change #${patchCount}`);
       }
     }
 
@@ -443,9 +451,10 @@ function applySchemaChangesPatch(
   visit(ast);
 
   if (patchCount === 2) {
-    console.log(
-      `patch: schema changes: Successfully replaced ${patchCount} occurrences`
-    );
+    if (isDebug())
+      console.log(
+        `patch: schema changes: Successfully replaced ${patchCount} occurrences`
+      );
     return true;
   } else {
     console.error(
@@ -493,9 +502,10 @@ function applyRemoveFeIEntriesPatch(ast: ESTree.Program): FeIResult {
             decl.id?.type === 'Identifier'
           ) {
             decl.init.elements = [decl.init.elements[0]];
-            console.log(
-              `✅ Removed hardcoded ${decl.id.name} entries (kept only first)`
-            );
+            if (isDebug())
+              console.log(
+                `✅ Removed hardcoded ${decl.id.name} entries (kept only first)`
+              );
             return { foundFeIVarName: true, feIVarName: decl.id.name };
           }
         }
@@ -526,9 +536,10 @@ function findReactImportForMenu(ast: ESTree.Program): ReactImport | null {
           code.includes('label:') &&
           decl.id?.type === 'Identifier'
         ) {
-          console.log(
-            `✅ Found menu items array at index ${i}: var ${decl.id.name}`
-          );
+          if (isDebug())
+            console.log(
+              `✅ Found menu items array at index ${i}: var ${decl.id.name}`
+            );
 
           const prevStatement = ast.body[i - 1];
           if (i > 0 && prevStatement?.type === 'VariableDeclaration') {
@@ -546,9 +557,10 @@ function findReactImportForMenu(ast: ESTree.Program): ReactImport | null {
               prevDecl.id?.type === 'Identifier'
             ) {
               const reactVarName = prevDecl.id.name;
-              console.log(
-                `✅ Found React import at index ${i - 1}: var ${reactVarName}`
-              );
+              if (isDebug())
+                console.log(
+                  `✅ Found React import at index ${i - 1}: var ${reactVarName}`
+                );
 
               return {
                 index: i - 1,
@@ -646,13 +658,13 @@ function findModelSelectionVars(
           const d_var = varsStmt.declarations[2].id.name;
           const G_var = varsStmt.declarations[3].id.name;
 
-          console.log(`✅ Found model selection variables:`);
-          console.log(`   n (models param): ${n_var}`);
-          console.log(`   r (state var): ${r_var}`);
-          console.log(`   s (handler): ${s_var}`);
-          console.log(`   o (default model): ${o_var}`);
-          console.log(`   d (menu items): ${d_var}`);
-          console.log(`   G (cancel option): ${G_var}`);
+          if (isDebug()) console.log(`✅ Found model selection variables:`);
+          if (isDebug()) console.log(`   n (models param): ${n_var}`);
+          if (isDebug()) console.log(`   r (state var): ${r_var}`);
+          if (isDebug()) console.log(`   s (handler): ${s_var}`);
+          if (isDebug()) console.log(`   o (default model): ${o_var}`);
+          if (isDebug()) console.log(`   d (menu items): ${d_var}`);
+          if (isDebug()) console.log(`   G (cancel option): ${G_var}`);
 
           return {
             n: n_var,
@@ -778,9 +790,10 @@ function applyModelMenuComputationPatch(
               kind: 'let',
               declarations: [newDDecl, gDecl],
             });
-            console.log(
-              '✅ Replaced model menu computation with dynamic version'
-            );
+            if (isDebug())
+              console.log(
+                '✅ Replaced model menu computation with dynamic version'
+              );
             return true;
           }
         }
@@ -898,11 +911,11 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
         },
       ],
     };
-    console.log('  Simplified --model option description');
+    if (isDebug()) console.log('  Simplified --model option description');
   }
 
   const n6Parent = parents.get(newExprNode);
-  console.log('  n6Parent type:', n6Parent?.type);
+  if (isDebug()) console.log('  n6Parent type:', n6Parent?.type);
 
   if (
     n6Parent &&
@@ -912,10 +925,10 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
     n6Parent.property.name === 'choices' &&
     n6Parent.object === newExprNode
   ) {
-    console.log('  Found MemberExpression .choices on N6');
+    if (isDebug()) console.log('  Found MemberExpression .choices on N6');
 
     const memberParent = parents.get(n6Parent);
-    console.log('  memberParent type:', memberParent?.type);
+    if (isDebug()) console.log('  memberParent type:', memberParent?.type);
 
     if (
       memberParent &&
@@ -923,7 +936,8 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
       memberParent.callee === n6Parent
     ) {
       choicesNode = memberParent;
-      console.log('  Found .choices(C2) CallExpression wrapping N6');
+      if (isDebug())
+        console.log('  Found .choices(C2) CallExpression wrapping N6');
 
       const choicesParent = parents.get(choicesNode);
       if (choicesParent) {
@@ -932,13 +946,13 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
           const parentValue = getNodeProperty(choicesParent, key);
           if (parentValue === choicesNode) {
             setNodeProperty(choicesParent, key, newExprNode);
-            console.log('  Removed .choices(C2) from N6');
+            if (isDebug()) console.log('  Removed .choices(C2) from N6');
             return true;
           } else if (Array.isArray(parentValue)) {
             const idx = parentValue.indexOf(choicesNode as ESTree.Node);
             if (idx !== -1) {
               parentValue[idx] = newExprNode as ESTree.Node;
-              console.log('  Removed .choices(C2) from N6');
+              if (isDebug()) console.log('  Removed .choices(C2) from N6');
               return true;
             }
           }
@@ -946,7 +960,7 @@ function applyCommanderModelOptionPatch(ast: ESTree.Program): boolean {
       }
     }
   } else {
-    console.log('  Note: No .choices MemberExpression on N6');
+    if (isDebug()) console.log('  Note: No .choices MemberExpression on N6');
   }
 
   return true;
@@ -980,22 +994,22 @@ export function writeModelExtensions(content: string): string | null {
   let fxeFuncName: string | null = null;
   try {
     ast = parseModule(beautified, { next: true }) as ESTree.Program;
-    console.log('✅ Parsed input code');
-    console.log(`   AST body length: ${ast.body.length}\n`);
+    if (isDebug()) console.log('✅ Parsed input code');
+    if (isDebug()) console.log(`   AST body length: ${ast.body.length}\n`);
   } catch (e) {
     logError('patch: modelExtensions: Parse failed:', e);
     return null;
   }
 
   // 3. Apply patches
-  console.log('Applying Patch 1: C2 extension code...');
+  if (isDebug()) console.log('Applying Patch 1: C2 extension code...');
   if (applyC2ExtensionPatch(ast)) {
-    console.log('✅ C2 extension patch applied\n');
+    if (isDebug()) console.log('✅ C2 extension patch applied\n');
   } else {
-    console.log('❌ C2 extension patch failed\n');
+    if (isDebug()) console.log('❌ C2 extension patch failed\n');
   }
 
-  console.log('Applying Patch 2: Fxe function modification...');
+  if (isDebug()) console.log('Applying Patch 2: Fxe function modification...');
   for (let i = 0; i < ast.body.length; i++) {
     const node = ast.body[i];
     if (node.type === 'FunctionDeclaration' && node.params.length === 2) {
@@ -1011,23 +1025,25 @@ export function writeModelExtensions(content: string): string | null {
     }
   }
   if (applyFxeFunctionPatch(ast)) {
-    console.log('✅ Fxe function patch applied\n');
+    if (isDebug()) console.log('✅ Fxe function patch applied\n');
   } else {
-    console.log('❌ Fxe function patch failed\n');
+    if (isDebug()) console.log('❌ Fxe function patch failed\n');
   }
 
-  console.log(
-    'Applying Patch 3: RWe function modification (fallback logic)...'
-  );
+  if (isDebug())
+    console.log(
+      'Applying Patch 3: RWe function modification (fallback logic)...'
+    );
   if (applyRWeFunctionPatch(ast, fxeFuncName)) {
-    console.log('✅ RWe function patch applied\n');
+    if (isDebug()) console.log('✅ RWe function patch applied\n');
   } else {
-    console.log('❌ RWe function patch failed\n');
+    if (isDebug()) console.log('❌ RWe function patch failed\n');
   }
 
-  console.log(
-    'Applying Patch 4: Schema changes (E2(C2).optional() → Ql().optional())...'
-  );
+  if (isDebug())
+    console.log(
+      'Applying Patch 4: Schema changes (E2(C2).optional() → Ql().optional())...'
+    );
   let c2VarName: string | null = null;
   for (let i = 0; i < ast.body.length; i++) {
     const node = ast.body[i];
@@ -1054,23 +1070,25 @@ export function writeModelExtensions(content: string): string | null {
     }
   }
   if (applySchemaChangesPatch(ast, c2VarName)) {
-    console.log('✅ Schema changes patch applied\n');
+    if (isDebug()) console.log('✅ Schema changes patch applied\n');
   } else {
-    console.log('❌ Schema changes patch failed\n');
+    if (isDebug()) console.log('❌ Schema changes patch failed\n');
   }
 
-  console.log('Applying Patch 5: Remove hardcoded FeI entries...');
+  if (isDebug())
+    console.log('Applying Patch 5: Remove hardcoded FeI entries...');
   const { foundFeIVarName, feIVarName } = applyRemoveFeIEntriesPatch(ast);
   if (foundFeIVarName) {
-    console.log('✅ FeI entries patch applied\n');
+    if (isDebug()) console.log('✅ FeI entries patch applied\n');
   } else {
-    console.log('❌ FeI entries patch failed\n');
+    if (isDebug()) console.log('❌ FeI entries patch failed\n');
   }
 
-  console.log('Applying Patch 6: Model menu computation...');
+  if (isDebug()) console.log('Applying Patch 6: Model menu computation...');
   const reactRef = findReactImportForMenu(ast);
   if (!reactRef) {
-    console.log('❌ Model menu computation patch failed (no React import)\n');
+    if (isDebug())
+      console.log('❌ Model menu computation patch failed (no React import)\n');
   } else {
     const { reactVarName } = reactRef;
     if (
@@ -1082,21 +1100,21 @@ export function writeModelExtensions(content: string): string | null {
         reactVarName
       )
     ) {
-      console.log('✅ Model menu computation patch applied\n');
+      if (isDebug()) console.log('✅ Model menu computation patch applied\n');
     } else {
-      console.log('❌ Model menu computation patch failed\n');
+      if (isDebug()) console.log('❌ Model menu computation patch failed\n');
     }
   }
 
-  console.log('Applying Patch 8: Commander model option...');
+  if (isDebug()) console.log('Applying Patch 8: Commander model option...');
   if (applyCommanderModelOptionPatch(ast)) {
-    console.log('✅ Commander model option patch applied\n');
+    if (isDebug()) console.log('✅ Commander model option patch applied\n');
   } else {
-    console.log('❌ Commander model option patch failed\n');
+    if (isDebug()) console.log('❌ Commander model option patch failed\n');
   }
 
   // 4. Generate with astring
-  console.log('Generating patched code...');
+  if (isDebug()) console.log('Generating patched code...');
   try {
     let out = generate(ast);
     // Prepend env node shebang if not present

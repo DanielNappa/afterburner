@@ -26,7 +26,7 @@ const main = async () => {
 
   // Handle --apply flag for non-interactive mode
   if (options.apply) {
-    console.log('Applying saved customizations to Github Copilot CLI...');
+    console.log('Applying saved customizations to GitHub Copilot CLI...');
     console.log(`Configuration saved at: ${CONFIG_FILE}`);
 
     try {
@@ -38,11 +38,11 @@ const main = async () => {
         process.exit(1);
       }
 
-      // Find Github Copilot CLI installation
+      // Find GitHub Copilot CLI installation
       const startupCheckInfo = await startupCheck();
 
       if (!startupCheckInfo || !startupCheckInfo.instInfo) {
-        console.error(`Cannot find Github Copilot CLI's index.js`);
+        console.error(`Cannot find GitHub Copilot CLI's index.js`);
         console.error('Searched at the following locations:');
         INDEXJS_SEARCH_PATH_INFO.forEach(info => {
           if (info.isGlob) {
@@ -62,7 +62,7 @@ const main = async () => {
       }
 
       console.log(
-        `Found Github Copilot CLI at: ${startupCheckInfo.instInfo.cliPath}`
+        `Found GitHub Copilot CLI at: ${startupCheckInfo.instInfo.cliPath}`
       );
       console.log(`Version: ${startupCheckInfo.instInfo.version}`);
 
@@ -102,7 +102,7 @@ const main = async () => {
       }).join('\n');
     };
 
-    console.error(`Cannot find Github Copilot CLI's index.js -- do you have Github Copilot CLI installed?
+    console.error(`Cannot find GitHub Copilot CLI's index.js -- do you have GitHub Copilot CLI installed?
 
 Searched at the following locations:
 ${formatSearchPaths()}
@@ -122,7 +122,7 @@ by manually specifying that location in ${CONFIG_FILE} with the "installationDir
 
 Notes:
 - Don't include index.js in the path.
-- Don't specify the path to your Github Copilot CLI executable's directory.  It needs to be the path
+- Don't specify the path to your GitHub Copilot CLI executable's directory.  It needs to be the path
   to the folder that contains **index.js**.
 - Please also open an issue so that we can add your path to the search list for all users!
 `);
