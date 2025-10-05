@@ -1,94 +1,145 @@
-# 🎨 afterburner
+# Afterburner CLI
 
-[![afterburner on npm](https://img.shields.io/npm/v/afterburner?color=yellow")](https://www.npmjs.com/package/afterburner)
-[![Mentioned in Awesome GitHub Copilot CLI](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code)
-[![ClaudeLog - A comprehensive knowledge base for Claude.](https://claudelog.com/img/claude_log_badge.svg)](https://claudelog.com/)
+## Disclaimer
 
-`afterburner` is a lightweight, interactive CLI tool that lets you personalize your GitHub Copilot CLI interface.
+This is an unofficial CLI tool and is not affiliated with,
+endorsed, or sponsored by GitHub, Microsoft, or their affiliates. It is provided
+"as-is" without any warranty. Use at your own discretion and risk.
 
-> [!note]
-> ⭐ **If you find afterburner useful, please consider [starring the repository](https://github.com/Piebald-AI/afterburner) to show your support!** ⭐
+## Credits
 
-<img src="./assets/demo.gif" alt="Animated GIF demonstrating running `npx afterburner`, creating a new theme, changing all of GitHub Copilot CLI's UI colors to purple, changing the thinking format from '<verb>ing...' to 'Claude is <verb>ing', changing the generating spinner style to a 50m glow animation, applying the changes, running Claude, and using '/config' to switch to the new theme, and sending a message to see the new thinking verb format." width="800">
+This tool is a fork of [tweakcc](https://github.com/Piebald-AI/tweakcc) by
+Piebald-AI. Much of the foundational work and inspiration comes from their
+original project. Sincere thanks to Piebald-AI for their contributions to the
+community.
 
-With afterburner, you can
+## Overview
 
-- Create **custom themes** with a graphical HSL/RGB color picker
-- Add custom **thinking verbs** that will show while Claude's working
-- Create custom **thinking spinner animations** with different speeds and phases
-- Change the "GitHub Copilot CLI" banner text to your own text with your own [figlet](http://www.figlet.org/) fonts
-- Supports GitHub Copilot CLI installed on **Windows, macOS, and Linux**, using npm, yarn, pnpm, bun, Homebrew, nvm, fnm, n, volta, nvs, and nodenv, or a custom location
-- Style the **user messages in the chat history** beyond the default plain gray text
-- Remove the **ASCII border** from the input box
+Afterburner is a command-line tool that extends the GitHub Copilot CLI to allow
+selection of all available models returned from the Copilot API (except for
+OpenAI o4-mini and GPT-5 Codex). It works by applying AST-level patches to the
+Copilot CLI installation, enabling dynamic model loading from environment
+variables, configuration files, and server responses.
 
-afterburner also
-- Restores the **token counter** and **elapsed time metric** that were shown during generation before GitHub Copilot CLI 1.0.83
-- Fixes a bug where the **spinner animation** is frozen if you have the `GITHUB_COPILOT_DISABLE_NONESSENTIAL_TRAFFIC` environment variable set ([#46](https://github.com/Piebald-AI/afterburner/issues/46))
-- Allows you to **change the context limit** used with models from custom Anthropic-compatible APIs with a new environment variable, `GITHUB_COPILOT_CONTEXT_LIMIT`
+## Quickstart
 
-Additionally, we're working on features that will allow you to
-- Pick from over **70+ spinning/thinking animations** from [`cli-spinners`](https://github.com/sindresorhus/cli-spinners)
-- Apply **custom styling** to the markdown elements in Claude's responses like code, bold, headers, etc
-- Customize the **shimmering effect** on the thinking verb: disable it; change its speed, width, and colors
-
-Run without installation:
+Run Afterburner without installation using npx, bunx, or your preferred package
+runner:
 
 ```bash
-$ npx afterburner
+npx afterburner-cli --apply
 
-# Or use pnpm:
-$ pnpm dlx afterburner
+# Or with bun:
+bunx afterburner-cli --apply
+
+# Or with pnpm:
+pnpm dlx afterburner-cli --apply
 ```
 
-## How it works
-
-`afterburner` works by patching the GitHub Copilot CLI's minified `index.js` file.  When you update your GitHub Copilot CLI installation, your customizations will be overwritten, but they're remembered in your `~/.afterburner/config.js` configuration file, so they can be reapplied by just rerunning the tool.
-
-`afterburner` is verified to work with GitHub Copilot CLI **1.0.128.**
-
-## Running
-
-Run with installing it with `npx afterburner`.  Or build and run it locally:
+To install globally:
 
 ```bash
-git clone https://github.com/Piebald-AI/afterburner.git
+npm install -g afterburner-cli
+
+# Then run:
+afterburner --apply
+```
+
+## Features
+
+The patches are applied at the Abstract Syntax Tree level using structural
+pattern matching, making them identifier-agnostic and robust across different
+CLI versions. When you update GitHub Copilot CLI, simply rerun Afterburner to
+reapply the patches.
+
+## How It Works
+
+Afterburner modifies the minified GitHub Copilot CLI bundle by parsing it into
+an Abstract Syntax Tree, applying targeted patches to specific code structures,
+and regenerating the modified code. The patcher uses meriyah for parsing,
+uglify-js for beautification, and astring for code generation.
+
+## Usage
+
+Basic usage to apply patches to your GitHub Copilot CLI installation:
+
+```bash
+afterburner --apply
+```
+
+Debug mode with verbose output:
+
+```bash
+afterburner --debug --apply
+```
+
+After patching, add custom models via environment variable:
+
+```bash
+export COPILOT_MODEL=custom-model-id
+copilot
+```
+
+Or add models to your config file at `~/.copilot/config.json`:
+
+```json
+{
+  "model": "custom-model-id"
+}
+```
+
+## Verified Compatibility
+
+Afterburner is tested and verified to work with GitHub Copilot CLI versions
+0.0.333 and 0.0.334. The structural pattern matching approach may not provide
+compatibility with other versions though, though testing is recommended and pull
+requests are welcome for fixes.
+
+## Development
+
+Clone and build from source:
+
+```bash
+git clone https://github.com/DanielNappa/afterburner.git
 cd afterburner
-pnpm i
-pnpm build
-node dist/index.js
+npm install
+npm run build
+node dist/index.js --apply
 ```
 
-## Related projects
+Run in development mode with bun:
 
-- [**ccstatusline**](https://github.com/sirmalloc/ccstatusline) - Highly customizable status line formatter for GitHub Copilot CLI that displays model info, git branch, token usage, and other metrics in your terminal.
-- [**claude-powerline**](https://github.com/Owloops/claude-powerline) - Vim-style powerline statusline for GitHub Copilot CLI with real-time usage tracking, git integration, and custom themes.
-- [**CCometixLine**](https://github.com/Haleclipse/CCometixLine) - A high-performance GitHub Copilot CLI statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, and GitHub Copilot CLI enhancement utilities.
-- [**cc-statuslines**](https://github.com/chongdashu/cc-statusline) - Transform your GitHub Copilot CLI experience with a beautiful, informative statusline.  One command.  Three questions.  Custom statusline.
+```bash
+bun dev --debug --apply
+```
 
-## FAQ
+## Technical Details
 
-#### How can I customize my GitHub Copilot CLI theme?
+The patcher implementation is located in `src/utils/patches/modelExtensions.ts`
+and uses TypeScript with proper ESTree type annotations. All code follows strict
+type checking with no any or unknown types allowed. The patches are applied
+purely through AST manipulation without string-based code modifications.
 
-Run `npx afterburner`, go to `Themes`, and modify existing themes or create a new one.  Then go back to the main menu and choose `Apply customizations to index.js`.
+For development and testing, you can generate astring-formatted reference files
+from your local CLI installation:
 
-#### Why isn't all the text in GitHub Copilot CLI is getting its color changed?
+```bash
+node -e "const fs=require('fs'),{parse}=require('meriyah'),{generate}=require('astring');const code=fs.readFileSync('node_modules/@github/copilot/index.js','utf-8');const ast=parse(code,{module:true,next:true});fs.writeFileSync('index-astring.js',generate(ast),'utf-8');"
+```
 
-Some of the text GitHub Copilot CLI outputs has no coloring information at all, and unfortunately, that text is rendered using your terminal's default text foreground color and can't be customized.
+These formatted files help with AST exploration during development but are not
+required for the patcher to function.
 
-#### Is there a way to disable colored output in GitHub Copilot CLI altogether?
+## Troubleshooting
 
-Yes!  You can use the [`FORCE_COLOR`](https://force-color.org/) environment variable, a convention which many CLI tools including GitHub Copilot CLI respect.  Set it to `0` to disable colors entirely in GitHub Copilot CLI.
+If patches fail to apply, ensure your GitHub Copilot CLI installation is at a
+supported version. Run with the `--debug` flag to see detailed patch application
+logs. If your CLI installation is in a non-standard location, the patcher may
+fail to locate it.
 
-#### Why isn't my new theme being applied?
-
-Could you have have forgotten to actually set GitHub Copilot CLI's theme to your new theme?  Run `claude` and then use `/theme` to switch to your new theme if so.
-
-#### `afterburner` vs. `tweakcn`...?
-
-[`tweakcn`](https://github.com/jnsahaj/tweakcn), though similarly named, is unrelated to `afterburner` or GitHub Copilot CLI.  It's a tool for editing your [shadcn/ui](https://github.com/shadcn-ui/ui) themes.  Check it out!
+When updating GitHub Copilot CLI to a new version, your patches will be
+overwritten. Simply rerun Afterburner to reapply them, although it is not guaranteed to work for newer versions.
 
 ## License
 
-[MIT](https://github.com/Piebald-AI/afterburner/blob/main/LICENSE)
-
-Copyright © 2025 [Piebald LLC](https://piebald.ai).
+This project is licensed under the MIT.

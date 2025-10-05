@@ -108,7 +108,7 @@ Searched at the following locations:
 ${formatSearchPaths()}
 
 If you have it installed but it's in a location not listed above, please open an issue at
-https://github.com/piebald-ai/afterburner/issues and tell us where you have it--we'll add that location
+https://github.com/DanielNappa/afterburner/issues and tell us where you have it--we'll add that location
 to our search list and release an update today!  And in the meantime, you can get afterburner working
 by manually specifying that location in ${CONFIG_FILE} with the "installationDir" property:
 
