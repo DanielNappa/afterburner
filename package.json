@@ -1,5 +1,5 @@
 {
-  "name": "afterburner",
+  "name": "afterburner-cli",
   "version": "0.0.1",
   "type": "module",
   "description": "Command-line tool to extend your GitHub CLI to accept more selectable models.",
@@ -18,7 +18,7 @@
     "format": "prettier --write src",
     "prepare": "npm run compile",
     "clean": "gts clean",
-    "compile": "bun run script/build.mts",
+    "compile": "bunx tsx script/build.mts",
     "fix": "gts fix",
     "pretest": "npm run compile",
     "posttest": "npm run lint"

@@ -30,7 +30,7 @@ const entryPoint: string = join(
 const tsConfig: string = join(__rootDirectory, "tsconfig.json");
 const packagePath: string = join(__rootDirectory, "package.json");
 const distPackagePath: string = join(__distDirectory, "package.json");
-const inject: string = join(__dirname, "require-shim.ts");
+const inject: string = join(__dirname, "require.ts");
 
 
 const isDevBuild: boolean = process.argv.includes("--dev") ||
@@ -104,7 +104,7 @@ function postBuild(): void {
 }
 
 if (runtime.startsWith("Bun")) {
-  const { $, build } = await import("bun");
+  const { build } = await import("bun");
   const ignoreReactDevToolsPlugin: Plugin<"Bun"> = createIgnorePlugin<"Bun">({
     name: "ignore-react-devtools",
     filter: /^react-devtools-core$/,
@@ -116,7 +116,7 @@ if (runtime.startsWith("Bun")) {
       loader: { ".node": "file" },
       // Do not bundle the contents of package.json at build time: always read it
       // at runtime.
-      external: [packagePath, "vscode", "node:child_process"],
+      external: [packagePath, "vscode", "node:child_process", "uglify-js"],
       format: "esm",
       target: "bun",
       tsconfig: tsConfig,
@@ -154,7 +154,7 @@ if (runtime.startsWith("Bun")) {
       loader: { ".node": "file" },
       // Do not bundle the contents of package.json at build time: always read it
       // at runtime.
-      external: [packagePath, "vscode", "node:child_process"],
+      external: [packagePath, "vscode", "node:child_process", "uglify-js"],
       bundle: true,
       format: "esm",
       platform: "node",

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { render } from 'ink';
 import { Command } from 'commander';
+import chalk from 'chalk';
 import App from './App.js';
 import { INDEXJS_SEARCH_PATH_INFO, CONFIG_FILE } from './utils/types.js';
 import { startupCheck, readConfigFile } from './utils/config.js';
@@ -65,11 +66,16 @@ const main = async () => {
         `Found GitHub Copilot CLI at: ${startupCheckInfo.instInfo.cliPath}`
       );
       console.log(`Version: ${startupCheckInfo.instInfo.version}`);
+      console.log(
+        chalk.yellowBright(
+          '⚠️ This version of the patcher has only been tested for versions 0.0.333 and 0.0.334 of the GitHub Copilot CLI it will break eventually for newer versions! ⚠️'
+        )
+      );
 
       // Apply the customizations
-      console.log('Applying customizations...');
+      console.log('Applying patches...');
       await applyCustomization(config, startupCheckInfo.instInfo);
-      console.log('Customizations applied successfully!');
+      console.log('Patches applied successfully!');
       process.exit(0);
     } catch (error) {
       console.error('Unexpected error:');

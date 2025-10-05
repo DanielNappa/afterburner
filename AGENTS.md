@@ -13,7 +13,7 @@ Pure AST-level patching - **Attempts to be 100% identifier-agnostic using struct
    - **NO `any` or `unknown` types allowed**
    - **NO `@ts-ignore` comments allowed**
    - Use proper ESTree types with `NodeWithIndex` helper for dynamic property access
-2. **Run linter**: `bun lint` from tweakcc directory - must pass
+2. **Run linter**: `bun lint` from afterburner directory - must pass
 3. **Use proper tool calls**: Use `str_replace_editor`, NOT echo/cat/heredoc/temp files
 4. **Use `node -e` for testing**: Never create temporary files for AST exploration
 
