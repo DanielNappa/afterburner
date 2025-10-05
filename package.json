@@ -1,5 +1,5 @@
 {
-  "name": "@afterburner/cli",
+  "name": "afterburner-cli",
   "version": "0.0.1",
   "type": "module",
   "description": "CLI tool to extend your GitHub Copilot CLI to accept more models from the API.",
