@@ -225,7 +225,7 @@ A patch is successful when:
 2. ✅ Linting passes (`bun lint`)
 3. ✅ Test script shows all patches applied (`./analyze-ast copy.mjs`)
 4. ✅ Diff matches ground truth (`copilot-astring.js`)
-5. ✅ Works across CLI versions (test 0.0.333 and 0.0.334)
+5. ✅ Works across CLI versions (test 0.0.333, 0.0.334, 0.0.335)
 6. ✅ Real CLI runs without errors
 7. ✅ Custom models visible in model selection menu
 8. ✅ Server models loaded dynamically in menu
