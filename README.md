@@ -47,9 +47,9 @@ tweakgc --apply
 ## How It Works
 
 Tweak GC modifies the minified GitHub Copilot CLI bundle by parsing it into
-an Abstract Syntax Tree, applying targeted patches to specific code structures,
-and regenerating the modified code. The patcher uses meriyah for parsing,
-and astring for code generation.
+an Abstract Syntax Tree, applying targeted patches to specific parts of the 
+bundle, and regenerating the modified code. The patcher uses `meriyah` for 
+parsing, and `astring` for code generation.
 
 ## Usage
 
@@ -108,9 +108,8 @@ bun dev --debug --apply
 ## Technical Details
 
 The patcher implementation is located in `src/utils/patches/modelExtensions.ts`
-and uses TypeScript with proper ESTree type annotations. All code follows strict
-type checking with no any or unknown types allowed. The patches are applied
-purely through AST manipulation without string-based code modifications.
+and uses TypeScript with proper ESTree type annotations. The patches are applied
+through AST manipulation.
 
 For development and testing, you can generate astring-formatted reference files
 from your local CLI installation:
