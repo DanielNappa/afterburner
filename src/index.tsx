@@ -68,7 +68,7 @@ const main = async () => {
       console.log(`Version: ${startupCheckInfo.instInfo.version}`);
       console.log(
         chalk.yellowBright(
-          '⚠️ This patcher has been tested and verified to work in version 0.0.335 of the GitHub Copilot CLI, it may break eventually for newer versions! ⚠️'
+          '⚠️ This patcher has been tested and verified to work in version 0.0.337 of the GitHub Copilot CLI, it may break eventually for newer versions! ⚠️'
         )
       );
 

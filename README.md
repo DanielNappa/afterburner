@@ -83,7 +83,7 @@ Or add models to your config file at `~/.copilot/config.json`:
 ## Verified Compatibility
 
 Tweak GC is tested and verified to work with GitHub Copilot CLI version
-0.0.335. The structural pattern matching approach may not provide
+0.0.337. The structural pattern matching approach may not provide
 compatibility with other versions, though testing is recommended and pull
 requests are welcome for fixes.
 
