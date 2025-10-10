@@ -114,7 +114,7 @@ export function MainView({ onSubmit, notification }: MainViewProps) {
         <Text color="red">
           ⚠️{' '}
           <Text bold>
-            This patcher has been tested and verified to work in version 0.0.337
+            This patcher has been tested and verified to work in version 0.0.338
             of the GitHub Copilot CLI,{' '}
           </Text>
           <Text bold>it may break eventually for newer versions!</Text> ⚠️
