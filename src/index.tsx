@@ -7,6 +7,7 @@ import { INDEXJS_SEARCH_PATH_INFO, CONFIG_FILE } from './utils/types.js';
 import { startupCheck, readConfigFile } from './utils/config.js';
 import { enableDebug } from './utils/misc.js';
 import { applyCustomization } from './utils/patches/index.js';
+import { checkForUpdates, CLI_VERSION } from './utils/version.js';
 
 const main = async () => {
   const program = new Command();
@@ -15,7 +16,7 @@ const main = async () => {
     .description(
       'Command-line tool to extend your GitHub CLI to accept more selectable models.'
     )
-    .version('0.0.1')
+    .version(CLI_VERSION)
     .option('-d, --debug', 'enable debug mode')
     .option('-a, --apply', 'apply saved customizations without interactive UI');
   program.parse();
@@ -24,6 +25,12 @@ const main = async () => {
   if (options.debug) {
     enableDebug();
   }
+
+  const updateMessage: string | undefined = await checkForUpdates().catch(
+    () => {
+      return chalk.red('Cannot check for updates for tweakgc');
+    }
+  );
 
   // Handle --apply flag for non-interactive mode
   if (options.apply) {
@@ -87,7 +94,9 @@ const main = async () => {
   const startupCheckInfo = await startupCheck();
 
   if (startupCheckInfo) {
-    render(<App startupCheckInfo={startupCheckInfo} />);
+    render(
+      <App startupCheckInfo={startupCheckInfo} updateMessage={updateMessage} />
+    );
   } else {
     // Format the search paths to show glob patterns with their expansions
     const formatSearchPaths = () => {

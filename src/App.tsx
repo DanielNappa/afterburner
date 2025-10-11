@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useCallback } from 'react';
 import { Box, useInput } from 'ink';
+import { Alert } from './components/Alert.js';
 import { MainView } from './components/MainView.js';
 // import { ThemesView } from './components/ThemesView.js';
 // import { LaunchTextView } from './components/LaunchTextView.js';
@@ -32,8 +33,10 @@ export const SettingsContext = createContext({
 
 export default function App({
   startupCheckInfo,
+  updateMessage,
 }: {
   startupCheckInfo: StartupCheckInfo;
+  updateMessage?: string;
 }) {
   const [config, setConfig] = useState<TweakGCConfig>({
     settings: DEFAULT_SETTINGS,
@@ -171,6 +174,11 @@ Please reapply your changes below.`,
         changesApplied: config.changesApplied,
       }}
     >
+      {updateMessage != null && (
+        <Box justifyContent="center" flexDirection="column" width={64}>
+          <Alert variant="success">{updateMessage}</Alert>
+        </Box>
+      )}
       <Box flexDirection="column">
         {
           currentView === null && (
