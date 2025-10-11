@@ -2,8 +2,6 @@
  * Model Extensions Patcher for Tweak GC
  *
  * Pure AST-level patching for GitHub Copilot CLI model extensions.
- * Requires beautified input (not minified single-line code).
- *
  * Uses meriyah for parsing and astring for code generation.
  */
 
