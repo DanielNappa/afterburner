@@ -1,6 +1,6 @@
 {
   "name": "tweakgc",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "description": "CLI tool to extend your GitHub Copilot CLI to accept more models from the API.",
   "main": "dist/index.js",
